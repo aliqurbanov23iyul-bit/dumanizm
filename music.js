@@ -4,41 +4,10 @@
 ═══════════════════════════════════════════════ */
 const $ = s => document.querySelector(s);
 
-// Fallback tracks in case database is empty or offline
-const DEFAULT_TRACKS = [
-  {
-    title: 'Senden Daha Güzel',
-    artist: 'Duman',
-    cover_url: 'assets/bow.png',
-    audio_url: 'https://cdn.freesound.org/previews/612/612610_5674468-lq.mp3'
-  },
-  {
-    title: 'Aman Aman',
-    artist: 'Duman',
-    cover_url: 'assets/kitty-running.png',
-    audio_url: 'https://cdn.freesound.org/previews/682/682633_11861866-lq.mp3'
-  },
-  {
-    title: 'Köprüaltı',
-    artist: 'Duman',
-    cover_url: 'assets/kitty-sitting.png',
-    audio_url: 'https://cdn.freesound.org/previews/556/556703_11861866-lq.mp3'
-  },
-  {
-    title: 'Kırmış Kalbini',
-    artist: 'Duman',
-    cover_url: 'assets/kitty-peek.png',
-    audio_url: 'https://cdn.freesound.org/previews/467/467610_9961300-lq.mp3'
-  },
-  {
-    title: 'Elleri Ellerime',
-    artist: 'Duman',
-    cover_url: 'assets/kitty-wave.png',
-    audio_url: 'https://cdn.freesound.org/previews/467/467611_9961300-lq.mp3'
-  }
-];
+// Musiqilər yalnız admin paneldən əlavə olunur.
+const DEFAULT_TRACKS = [];
 
-let tracks = [...DEFAULT_TRACKS];
+let tracks = [];
 let currentIndex = 0;
 const audio = $('#audio');
 const cassette = $('#cassette');
@@ -64,7 +33,13 @@ function toast(msg) {
 // ── RENDER CASSETTE ──────────────────────────
 function render() {
   if (!tracks.length) {
-    tracks = [...DEFAULT_TRACKS];
+    $('#trackName').textContent = 'Hələ musiqi əlavə edilməyib';
+    $('#artistLabel').textContent = 'Admin paneldən musiqi əlavə edin';
+    $('#cover').src = 'assets/bow.png';
+    if (audio) { audio.removeAttribute('src'); audio.load(); }
+    if ($('#prevTitle')) $('#prevTitle').textContent = '—';
+    if ($('#nextTitle')) $('#nextTitle').textContent = '—';
+    return;
   }
   const t = tracks[currentIndex];
   if (!t) return;
@@ -220,7 +195,7 @@ function openSongByTitle(title) {
   }
 }
 
-// ── LOAD TRACKS FROM API OR FALLBACK ─────────
+// ── LOAD TRACKS FROM API ─────────────────────
 async function initPlaylist() {
   try {
     const res = await fetch('/api/public');
@@ -231,7 +206,7 @@ async function initPlaylist() {
       }
     }
   } catch (err) {
-    // Keep DEFAULT_TRACKS
+    // Boş siyahı saxlanılır; saxta/fallback musiqi göstərilmir
   }
 
   render();
