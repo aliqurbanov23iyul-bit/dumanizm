@@ -411,3 +411,12 @@ input[type=range].seek-bar::-webkit-slider-thumb{appearance:none;width:16px;heig
 .playlist-track img{width:54px;height:54px;border-radius:12px;object-fit:cover;background:#33202c}.playlist-num{font-size:10px;font-weight:900;opacity:.42;text-align:center}.playlist-meta{min-width:0}.playlist-meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.playlist-meta small{display:block;font-size:11px;opacity:.5;margin-top:3px}.playlist-play{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);font-size:11px}.playlist-track.active .playlist-play{background:var(--cover-glow)}
 .playlist-empty{text-align:center;padding:60px 20px;opacity:.55;font-weight:800}.playlist-open{overflow:hidden}
 @media(max-width:360px){.playlist-pill{min-width:86px;padding:8px}.playlist-track{grid-template-columns:24px 48px 1fr 32px}.playlist-track img{width:48px;height:48px}}
+
+/* Quiz result inherits the winning song cover palette */
+.test-page.result-theme-active{background:
+radial-gradient(circle at 50% 18%,rgba(var(--result-rgb),.72),transparent 46%),
+linear-gradient(160deg,rgb(var(--result-rgb)),#100910 78%);transition:background .7s ease}
+.test-page.result-theme-active header{background:rgba(var(--result-rgb),.30);border-bottom-color:rgba(var(--result-rgb),.7)}
+.test-page.result-theme-active .result-card{background:linear-gradient(155deg,rgba(255,255,255,.98),rgba(var(--result-rgb),.18));box-shadow:8px 10px 0 rgba(var(--result-rgb),.9),0 22px 60px rgba(var(--result-rgb),.35)}
+.test-page.result-theme-active .result-cover{width:min(72vw,280px);height:min(72vw,280px);box-shadow:9px 11px 0 var(--ink),0 20px 50px rgba(var(--result-rgb),.45);transition:.5s}
+.test-page.result-theme-active .result-badge{background:rgba(var(--result-rgb),.16)!important;color:rgb(var(--result-rgb))!important}
