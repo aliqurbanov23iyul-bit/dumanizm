@@ -1,101 +1,31 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="az">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Diva Admin Panel V2</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#180913">
+<title>Diva Access — Dumanizm</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="geri-alin.css">
 </head>
-<body class="admin-page">
-<main class="admin-shell">
-
-  <!-- LOGIN -->
-  <section id="loginBox" class="admin-login">
-    <img src="assets/kitty-peek.png" alt="Kitty">
-    <h1>Diva Admin</h1>
-    <p>İdarəetmə panelinizə giriş</p>
-    <input class="field-input" id="adminPassword" type="password" placeholder="Admin şifrəsi" autocomplete="current-password">
-    <button class="cta" id="loginBtn" style="width:100%;margin-top:10px">Daxil ol</button>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section id="dashboard" hidden>
-    <div class="admin-header">
-      <div>
-        <p class="eyebrow">DIVA CONTROL ROOM</p>
-        <h1>Admin Panel</h1>
+<body class="return-page">
+  <div class="return-grain"></div>
+  <div class="return-stars" aria-hidden="true"><i>✦</i><i>★</i><i>🎀</i><i>✦</i><i>♪</i></div>
+  <main class="return-wrap">
+    <div class="return-code">403</div>
+    <div class="return-card">
+      <div class="return-tag">DIVA CLUB • ACCESS PAUSED</div>
+      <img src="assets/kitty-peek.png" class="return-kitty" alt="Hello Kitty">
+      <h1>Saytı görmək üçün<br><em>Əlini qrupa geri alın.</em></h1>
+      <p class="return-note">Sayt yerindədir. Sadəcə Əli qrupdan çıxarıldığı üçün bu ekran bir az drama edir.</p>
+      <div class="return-status"><span></span> DIVA UĞURUN QƏRARINI GÖZLƏYİRİK...</div>
+      <div class="return-actions">
+        <a href="https://www.instagram.com/ok4nnerr/" target="_blank" rel="noopener noreferrer"><b>Instagram</b><small>@ok4nnerr</small><strong>↗</strong></a>
+        <a href="https://www.tiktok.com/@ok4nnerr" target="_blank" rel="noopener noreferrer"><b>TikTok</b><small>@ok4nnerr</small><strong>↗</strong></a>
+        <a class="return-wa" href="https://wa.me/?text=%C6%8Fli%2C%20s%C9%99n%C9%99%20Dumanizm%20sayt%C4%B1%20bar%C9%99d%C9%99%20yaz%C4%B1ram%20%F0%9F%8E%80" target="_blank" rel="noopener noreferrer"><b>Əliyə mesaj göndərin</b><small>WhatsApp</small><strong>↗</strong></a>
       </div>
-      <button class="ghost" id="logout">Çıxış</button>
+      <div class="return-footer">DESIGNED &amp; CODED BY <b>ALI</b> • DUMANIZM</div>
     </div>
-
-    <!-- STATS -->
-    <div class="stat-grid" id="statGrid">
-      <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Ümumi</div></div>
-      <div class="stat-card"><div class="stat-num" id="statPending">—</div><div class="stat-label">Gözləyən</div></div>
-      <div class="stat-card"><div class="stat-num" id="statAccepted">—</div><div class="stat-label">Qəbul</div></div>
-      <div class="stat-card"><div class="stat-num" id="statRejected">—</div><div class="stat-label">Rədd</div></div>
-      <div class="stat-card"><div class="stat-num" id="statCrew">—</div><div class="stat-label">Crew</div></div>
-      <div class="stat-card"><div class="stat-num" id="statMusic">—</div><div class="stat-label">Musiqi</div></div>
-    </div>
-
-    <!-- TABS -->
-    <div class="admin-tabs">
-      <button class="admin-tab-btn active" data-tab="applications">Anketlər</button>
-      <button class="admin-tab-btn" data-tab="music">Musiqilər</button>
-      <button class="admin-tab-btn" data-tab="content">Sayt Yazıları</button>
-    </div>
-
-    <!-- APPLICATIONS TAB -->
-    <div class="tab-pane active" id="tab-applications">
-      <div class="admin-card">
-        <h2>Müraciətlər</h2>
-        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-          <button class="admin-tab-btn active" data-filter="all" id="filter-all">Hamısı</button>
-          <button class="admin-tab-btn" data-filter="pending" id="filter-pending">Gözləyən</button>
-          <button class="admin-tab-btn" data-filter="accepted" id="filter-accepted">Qəbul</button>
-          <button class="admin-tab-btn" data-filter="rejected" id="filter-rejected">Rədd</button>
-        </div>
-        <div id="applicationList"></div>
-      </div>
-    </div>
-
-    <!-- MUSIC TAB -->
-    <div class="tab-pane" id="tab-music">
-      <div class="admin-card">
-        <h2>Yeni Musiqi</h2>
-        <form id="musicForm" class="admin-form">
-          <label>Mahnı adı *<input name="title" required placeholder="Senden Daha Güzel"></label>
-          <label>İfaçı<input name="artist" value="Duman" placeholder="Duman"></label>
-          <label>MP3 faylı *<input name="audio_file" id="audioFile" required type="file" accept="audio/*,.mp3"></label>
-          <label>Cover şəkli<input name="cover_file" id="coverFile" type="file" accept="image/*"></label>
-          <input name="audio_url" id="audioUrl" type="hidden">
-          <input name="cover_url" id="coverUrl" type="hidden">
-          <small style="opacity:.65;display:block;margin-top:-4px">MP3 və cover avtomatik Cloudinary-yə yüklənəcək.</small>
-          <small style="opacity:.65;display:block">Sıra avtomatik verilir: hər yeni musiqi əvvəlkindən +1 olur.</small>
-          <button class="cta">Əlavə et +</button>
-        </form>
-      </div>
-      <div class="admin-card">
-        <h2>Playlist</h2>
-        <div id="musicList"></div>
-      </div>
-    </div>
-
-    <!-- CONTENT TAB -->
-    <div class="tab-pane" id="tab-content">
-      <div class="admin-card">
-        <h2>Saytdakı Yazılar</h2>
-        <form id="contentForm" class="admin-form">
-          <label>Ana başlıq<input name="hero_title" placeholder="Bir gecə. Çoxlu Duman."></label>
-          <label>Ana mətn<textarea name="hero_text" rows="3" placeholder="Konsertə tək getmirik..."></textarea></label>
-          <label>Qaydalar <small style="font-weight:400;opacity:.6">(hər sətrə bir qayda)</small><textarea name="rules" rows="8" placeholder="Qrupdan xəbərsiz yoxa çıxmaq yoxdur.&#10;Görüşü saatına gecikmək minimum..."></textarea></label>
-          <button class="cta">Yadda saxla</button>
-        </form>
-      </div>
-    </div>
-  </section>
-</main>
-<div id="toast"></div>
-<script src="admin.js"></script>
+  </main>
 </body>
 </html>
