@@ -11,13 +11,18 @@
 <div class="grain"></div>
 <header>
   <a href="index.html" class="logo"><img src="assets/bow.png" alt="bow">DIVA CLUB</a>
-  <span class="page-label">MUSIQI</span>
+  <button class="playlist-top-btn" id="playlistBtn" type="button">☰ PLAYLIST</button>
 </header>
 
 <main class="player-wrap">
   <div class="player-heading">
-    <p class="eyebrow">DUMAN KASETLERI · SWIPE ET</p>
-    <h1>Sesi ac.<br>Kaseti çevir.</h1>
+    <div class="player-heading-row">
+      <div>
+        <p class="eyebrow">DUMAN KASETLƏRİ · SWIPE ET</p>
+        <h1>Səsi aç.<br>Kaseti çevir.</h1>
+      </div>
+      <button class="playlist-pill" id="playlistBtnHero" type="button"><span>☰</span><b>Playlist</b><small id="trackCount">0 mahnı</small></button>
+    </div>
   </div>
 
   <!-- CASSETTE STAGE -->
@@ -69,11 +74,21 @@
       <button id="playBtn" aria-label="Oyna">▶</button>
       <button id="nextBtn" aria-label="Növbəti">&#8250;</button>
     </div>
-    <p class="swipe-hint">← barmaginla saga/sola sürüşdür →</p>
+    <p class="swipe-hint">← barmağınla sağa/sola sürüşdür →</p>
   </div>
 
   <audio id="audio" preload="metadata"></audio>
 </main>
+
+<div class="playlist-backdrop" id="playlistBackdrop"></div>
+<section class="playlist-sheet" id="playlistSheet" aria-hidden="true">
+  <div class="playlist-handle"></div>
+  <div class="playlist-sheet-head">
+    <div><small>DIVA CLUB</small><h2>Mahnı siyahısı</h2><p>İstədiyini seç, birbaşa dinlə 🎧</p></div>
+    <button id="playlistClose" type="button" aria-label="Bağla">×</button>
+  </div>
+  <div class="playlist-list" id="playlistList"></div>
+</section>
 
 <nav class="bottom-nav">
   <a href="index.html">🏠<span>Ana</span></a>
