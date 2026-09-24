@@ -33,9 +33,7 @@ async function init(sql) {
   `;
 
   await sql`
-    DO $ BEGIN
-      ALTER TABLE applications ADD COLUMN IF NOT EXISTS ticket_token TEXT;
-    EXCEPTION WHEN others THEN NULL; END $
+    ALTER TABLE applications ADD COLUMN IF NOT EXISTS ticket_token TEXT
   `;
   await sql`CREATE UNIQUE INDEX IF NOT EXISTS applications_ticket_token_idx ON applications(ticket_token) WHERE ticket_token IS NOT NULL`;
 
