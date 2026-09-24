@@ -77,8 +77,8 @@ function renderApplications(apps) {
           ${status !== 'rejected' ? `<button class="btn-reject" onclick="rejectApp(${x.id})">&#10007; Rədd</button>` : ''}
           <button class="btn-delete" onclick="deleteApp(${x.id})">Sil</button>
           ${x.crew_id ? `
-            <button style="background:#ffe9f1;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radıus:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="viewTicket(${x.id})">Biletə bax 🎀</button>
-            <button style="background:#ffffff;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radıus:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="copyTicketLink(${x.id})">Link kopyala 📋</button>
+            <button style="background:#ffe9f1;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="viewTicket(${x.id})">Biletə bax 🎀</button>
+            <button style="background:#ffffff;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="copyTicketLink(${x.id})">Link kopyala 📋</button>
           ` : ''}
         </div>
       </div>
@@ -164,7 +164,7 @@ window.acceptApp = async id => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'acceptApplication', id })
     });
-    toast('Qəbul edildi! Crew bileti yaradıldi 🎀');
+    toast('Qəbul edildi! Crew bileti yaradıldı 🎀');
     load();
   } catch { toast('Xəta baş verdi', 'err'); }
 };
@@ -226,23 +226,68 @@ window.deleteMusic = async id => {
   } catch { toast('Xəta baş verdi', 'err'); }
 };
 
+// Cloudinary upload
+const CLOUDINARY_CLOUD_NAME = 'sz6wlckf';
+const CLOUDINARY_UPLOAD_PRESET = 'duman_music';
+
+async function uploadToCloudinary(file, resourceType = 'auto') {
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  fd.append('folder', 'dumanizm');
+  const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`, {
+    method: 'POST',
+    body: fd
+  });
+  const data = await r.json();
+  if (!r.ok || !data.secure_url) throw new Error(data.error?.message || 'Cloudinary yükləmə xətası');
+  return data.secure_url;
+}
+
 // Add music form
 $('#musicForm').onsubmit = async e => {
   e.preventDefault();
   const btn = e.submitter || e.target.querySelector('button');
+  const audioFile = $('#audioFile')?.files?.[0];
+  const coverFile = $('#coverFile')?.files?.[0];
+  if (!audioFile) { toast('MP3 faylı seçin', 'err'); return; }
+
   btn.disabled = true;
+  const oldText = btn.textContent;
+  btn.textContent = 'Yüklənir...';
   try {
+    toast('MP3 Cloudinary-yə yüklənir... 🎵');
+    const audioUrl = await uploadToCloudinary(audioFile, 'video');
+    let coverUrl = '';
+    if (coverFile) {
+      toast('Cover şəkli yüklənir... 🖼️');
+      coverUrl = await uploadToCloudinary(coverFile, 'image');
+    }
+
+    const fd = new FormData(e.target);
+    const payload = {
+      action: 'addMusic',
+      title: fd.get('title'),
+      artist: fd.get('artist') || 'Duman',
+      position: fd.get('position') || 0,
+      audio_url: audioUrl,
+      cover_url: coverUrl
+    };
     await api('/api/admin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'addMusic', ...Object.fromEntries(new FormData(e.target)) })
+      body: JSON.stringify(payload)
     });
     e.target.reset();
     e.target.querySelector('[name=artist]').value = 'Duman';
     toast('Musiqi əlavə edildi 🎵');
     load();
-  } catch (err) { toast('Xəta: ' + err.message, 'err'); }
-  finally { btn.disabled = false; }
+  } catch (err) {
+    toast('Xəta: ' + (err.message || 'Yükləmə alınmadı'), 'err');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = oldText;
+  }
 };
 
 // Content form
