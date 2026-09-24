@@ -91,14 +91,9 @@ const QUESTIONS = [
     ]
   },
   {
-    q: 'Gecə saat 02:00-da hansı əhvalda olursan?',
-    opts: [
-      { text: 'Romantik xəyallarda, köhnə mesajları oxuyuram', song: 0 },
-      { text: 'Hələ də yatmıram, qulaqlıqda mahnı dinləyirəm', song: 1 },
-      { text: 'Pəncərədən Bakının küləyinə və gecəsinə baxıram', song: 2 },
-      { text: 'Dərin düşüncələrdə, bir az kədərli amma rahat', song: 3 },
-      { text: 'Dostlara komik Kitty memləri göndərirəm', song: 4 },
-    ]
+    q: 'Gecə saat 02:00-da nə edirsən?',
+    type: 'text',
+    placeholder: 'Öz cavabını yaz...'
   },
   {
     q: 'Əgər Kaan Tangöze səhnədən sənə baxıb nəsə desəydi:',
@@ -112,13 +107,8 @@ const QUESTIONS = [
   },
   {
     q: 'Diva Uğur konsertdə hansı mahnıda səhnəyə çıxsın?',
-    opts: [
-      { text: 'Senden Daha Güzel — bütün zal birlikdə oxuyanda', song: 0 },
-      { text: 'Aman Aman — hamı tullananda', song: 1 },
-      { text: 'Köprüaltı — akustik gitar solo ilə', song: 2 },
-      { text: 'Kırmış Kalbini — dramatik tonda', song: 3 },
-      { text: 'Elleri Ellerime — Kitty bowları havaya qalxanda', song: 4 },
-    ]
+    type: 'text',
+    placeholder: 'Mahnının adını özün yaz...'
   },
   {
     q: 'Hello Kitty × Duman konsertində sənin rolun:',
@@ -164,14 +154,40 @@ function renderQuestion() {
     <div class="test-question-card" style="animation: stepIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both">
       <div class="test-q-number">SUAL ${currentQ + 1} / ${QUESTIONS.length}</div>
       <div class="test-question">${q.q}</div>
-      <div class="test-options">
-        ${q.opts.map((o, i) =>
-          `<button class="test-opt" data-song="${o.song}" data-idx="${i}">${o.text}</button>`
-        ).join('')}
-      </div>
+      ${q.type === 'text' ? `
+        <div class="test-write-answer">
+          <textarea class="test-free-input" id="freeAnswer" maxlength="160" rows="3" placeholder="${q.placeholder || 'Cavabını yaz...'}"></textarea>
+          <button class="test-free-next" id="freeNext" type="button">Davam et →</button>
+        </div>
+      ` : `
+        <div class="test-options">
+          ${q.opts.map((o, i) =>
+            `<button class="test-opt" data-song="${o.song}" data-idx="${i}">${o.text}</button>`
+          ).join('')}
+        </div>
+      `}
+
     </div>
   `;
   renderProgressBar();
+
+  if (q.type === 'text') {
+    const input = $('#freeAnswer');
+    const next = $('#freeNext');
+    const submitFree = () => {
+      const value = input?.value.trim();
+      if (!value) { toast('Cavabını yaz 🎀'); input?.focus(); return; }
+      // Yazılı cavab nəticəni süni şəkildə dəyişmir; şəxsi cavab kimi saxlanılır.
+      answers.push(null);
+      currentQ++;
+      if (currentQ >= QUESTIONS.length) showResult(); else renderQuestion();
+    };
+    next?.addEventListener('click', submitFree);
+    input?.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitFree(); }
+    });
+    setTimeout(() => input?.focus(), 250);
+  }
 
   wrap.querySelectorAll('.test-opt').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -193,7 +209,7 @@ function renderQuestion() {
 
 function showResult() {
   const tally = {};
-  answers.forEach(s => tally[s] = (tally[s] || 0) + 1);
+  answers.filter(s => Number.isInteger(s)).forEach(s => tally[s] = (tally[s] || 0) + 1);
   const sorted = Object.entries(tally).sort((a, b) => b[1] - a[1]);
   const winnerIndex = sorted.length ? parseInt(sorted[0][0]) : 0;
   const song = SONGS[winnerIndex] || SONGS[0];
