@@ -1,4 +1,5 @@
 const { db, init } = require('./_db');
+const crypto = require('crypto');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end();
@@ -20,10 +21,11 @@ module.exports = async (req, res) => {
     const sql = db();
     await init(sql);
 
+    const ticketToken = crypto.randomBytes(24).toString('hex');
     const rows = await sql`
-      INSERT INTO applications(name, age, favorite_song, phone, status, crew_id)
-      VALUES(${cleanName}, ${n}, ${cleanSong}, ${cleanPhone}, 'pending', nextval('crew_id_seq'))
-      RETURNING id, name, favorite_song, crew_id, status
+      INSERT INTO applications(name, age, favorite_song, phone, status, crew_id, ticket_token)
+      VALUES(${cleanName}, ${n}, ${cleanSong}, ${cleanPhone}, 'pending', nextval('crew_id_seq'), ${ticketToken})
+      RETURNING id, name, favorite_song, crew_id, status, ticket_token
     `;
     const row = rows[0];
 
@@ -34,7 +36,8 @@ module.exports = async (req, res) => {
       favorite_song: row.favorite_song,
       crew_id: row.crew_id,
       status: row.status,
-      ticket_url: `/ticket.html?id=${row.id}`
+      ticket_token: row.ticket_token,
+      ticket_url: `/ticket.html?t=${encodeURIComponent(row.ticket_token)}`
     });
   } catch (e) {
     res.status(500).json({ error: e.message });
