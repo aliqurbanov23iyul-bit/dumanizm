@@ -1,4 +1,4 @@
-﻿const { db, init } = require('./_db');
+const { db, init } = require('./_db');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end();
@@ -14,19 +14,28 @@ module.exports = async (req, res) => {
     const cleanName = String(name).replace(/[<>]/g, '').trim().slice(0, 60);
     const cleanSong = String(favorite_song).replace(/[<>]/g, '').trim().slice(0, 100);
     const cleanPhone = String(phone).replace(/[<>]/g, '').trim().slice(0, 30);
-
     if (!cleanName || !cleanSong || !cleanPhone)
       return res.status(400).json({ error: 'Duzgun melumatlari daxil et' });
 
     const sql = db();
     await init(sql);
 
-    await sql`
-      INSERT INTO applications(name, age, favorite_song, phone, status)
-      VALUES(${cleanName}, ${n}, ${cleanSong}, ${cleanPhone}, 'pending')
+    const rows = await sql`
+      INSERT INTO applications(name, age, favorite_song, phone, status, crew_id)
+      VALUES(${cleanName}, ${n}, ${cleanSong}, ${cleanPhone}, 'pending', nextval('crew_id_seq'))
+      RETURNING id, name, favorite_song, crew_id, status
     `;
+    const row = rows[0];
 
-    res.status(201).json({ ok: true });
+    res.status(201).json({
+      ok: true,
+      id: row.id,
+      name: row.name,
+      favorite_song: row.favorite_song,
+      crew_id: row.crew_id,
+      status: row.status,
+      ticket_url: `/ticket.html?id=${row.id}`
+    });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
