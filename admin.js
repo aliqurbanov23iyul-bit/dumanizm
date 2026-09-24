@@ -269,7 +269,6 @@ $('#musicForm').onsubmit = async e => {
       action: 'addMusic',
       title: fd.get('title'),
       artist: fd.get('artist') || 'Duman',
-      position: fd.get('position') || 0,
       audio_url: audioUrl,
       cover_url: coverUrl
     };
