@@ -40,3 +40,24 @@
  .return-footer{font-size:7px;padding-bottom:20px}
 }
 @media(max-width:370px){.return-actions{grid-template-columns:1fr}.return-actions .return-wa{grid-column:1}.return-card h1{font-size:36px}}
+
+/* social section v2 */
+.return-actions{display:none!important}
+.return-socials{margin:22px 0 21px;text-align:left}
+.social-label{margin:0 0 9px 4px;font-size:8px;font-weight:900;letter-spacing:2.4px;color:#bfa8b5}
+.social-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.social-pill,.whatsapp-bar{text-decoration:none;-webkit-tap-highlight-color:transparent}
+.social-pill{position:relative;min-width:0;display:flex;align-items:center;gap:10px;padding:11px;background:#f8f4f6;color:#24101b;border:1px solid #fff;border-radius:18px;box-shadow:none;overflow:hidden;transition:transform .18s ease,background .18s ease}
+.social-pill:after{content:"";position:absolute;inset:auto -20% -90% 20%;height:100%;background:#ff4f9130;transform:rotate(-8deg);transition:.25s}
+.social-pill:hover:after,.social-pill:active:after{bottom:-55%}
+.social-pill:active{transform:scale(.97)}
+.social-logo{position:relative;z-index:1;width:35px;height:35px;flex:0 0 35px;display:grid;place-items:center;border-radius:12px;background:#27101d;color:#ff4f91}
+.social-logo svg,.wa-logo svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.social-logo .fill-dot{fill:currentColor;stroke:none}
+.social-copy{position:relative;z-index:1;min-width:0;display:flex;flex-direction:column}
+.social-copy b{font-size:13px;line-height:1.1}.social-copy small{margin-top:3px;font-size:8px;opacity:.55;white-space:nowrap}
+.whatsapp-bar{margin-top:9px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:12px 13px;border:1px solid #ff75aa;border-radius:18px;background:#ff4f91;color:#fff;box-shadow:0 8px 24px #ff4f9122;transition:transform .18s ease,filter .18s ease}
+.whatsapp-bar:active{transform:scale(.98);filter:brightness(.94)}
+.wa-logo{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;background:#fff;color:#ff4f91}
+.whatsapp-bar>span:nth-child(2){display:flex;flex-direction:column}.whatsapp-bar b{font-size:14px}.whatsapp-bar small{margin-top:3px;font-size:9px;color:#ffe9f2}.wa-arrow{font-size:22px}
+@media(max-width:380px){.social-row{grid-template-columns:1fr}.social-pill{padding:10px 12px}.social-copy small{display:block}}
