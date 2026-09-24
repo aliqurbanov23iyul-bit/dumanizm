@@ -7,6 +7,28 @@ const $ = s => document.querySelector(s);
 // Musiqilər yalnız admin paneldən əlavə olunur.
 const DEFAULT_TRACKS = [];
 
+const CURATED_TRACKS = [
+  { title:'Senden Daha Güzel', artist:'Duman', album:'Duman II', position:1 },
+  { title:'Her Şeyi Yak', artist:'Duman', album:'Belki Alışman Lazım', position:2 },
+  { title:'Aman Aman', artist:'Duman', album:'Seni Kendime Sakladım', position:3 },
+  { title:'Seni Kendime Sakladım', artist:'Duman', album:'Seni Kendime Sakladım', position:4 },
+  { title:'Bu Akşam', artist:'Duman', album:'Belki Alışman Lazım', position:5 },
+  { title:'Haberin Yok Ölüyorum', artist:'Duman', album:'Belki Alışman Lazım', position:6 },
+  { title:'Köprüaltı', artist:'Duman', album:'Eski Köprünün Altında', position:7 },
+  { title:'Dibine Kadar', artist:'Duman', album:'Duman I', position:8 },
+  { title:'Yürek', artist:'Duman', album:'Darmaduman', position:9 },
+  { title:'Öyle Dertli', artist:'Duman', album:'Darmaduman', position:10 },
+  { title:'Gözleri Kanlı', artist:'Duman', album:'Darmaduman', position:11 },
+  { title:'Belki Alışman Lazım', artist:'Duman', album:'Belki Alışman Lazım', position:12 },
+  { title:'Rüyanda Görsen İnanma', artist:'Duman', album:'Seni Kendime Sakladım', position:13 },
+  { title:'En Güzel Günüm Gecem', artist:'Duman', album:'Seni Kendime Sakladım', position:14 },
+  { title:'Kufi', artist:'Duman', album:'Kufi', position:15 }
+];
+
+// Mahnıların tam audio faylları müəllif hüquqlarına görə repoya daxil edilmir.
+// Admin paneldən hüququnuz olan audio URL əlavə edildikdə həmin mahnı player-də aktiv görünür.
+
+
 let tracks = [];
 let currentIndex = 0;
 const audio = $('#audio');
