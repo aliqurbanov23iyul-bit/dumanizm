@@ -475,3 +475,11 @@ linear-gradient(160deg,rgb(var(--result-rgb)),#100910 78%);transition:background
 .test-page.result-theme-active .result-song-desc{color:rgba(255,255,255,.84)}
 .test-page.result-theme-active .result-cover{border:1px solid rgba(255,255,255,.28);box-shadow:0 20px 55px rgba(0,0,0,.45)}
 .test-page.result-theme-active .result-poster-footer{background:rgba(0,0,0,.30);border-top:1px solid rgba(255,255,255,.16)}
+
+/* Quiz free-answer questions */
+.test-write-answer{display:grid;gap:12px;margin-top:18px}
+.test-free-input{width:100%;min-height:112px;resize:none;border:2px solid var(--ink);border-radius:20px;background:rgba(255,255,255,.92);color:var(--ink);padding:16px;font:700 15px/1.45 var(--font-body);outline:none;box-shadow:4px 5px 0 var(--pink);transition:.18s}
+.test-free-input:focus{transform:translateY(-2px);box-shadow:5px 7px 0 var(--pink);border-color:var(--pink)}
+.test-free-input::placeholder{color:#9b858e}
+.test-free-next{border:2px solid var(--ink);border-radius:18px;background:var(--pink);color:#fff;padding:14px 18px;font-weight:900;font-size:14px;box-shadow:4px 5px 0 var(--ink)}
+.test-free-next:active{transform:translate(3px,3px);box-shadow:1px 2px 0 var(--ink)}
