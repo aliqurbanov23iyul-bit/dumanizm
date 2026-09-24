@@ -1,0 +1,98 @@
+﻿<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diva Admin Panel V2</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+<main class="admin-shell">
+
+  <!-- LOGIN -->
+  <section id="loginBox" class="admin-login">
+    <img src="assets/kitty-peek.png" alt="Kitty">
+    <h1>Diva Admin</h1>
+    <p>Idareetme panelinize giris</p>
+    <input class="field-input" id="adminPassword" type="password" placeholder="Admin sifresi" autocomplete="current-password">
+    <button class="cta" id="loginBtn" style="width:100%;margin-top:10px">Daxil ol</button>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" hidden>
+    <div class="admin-header">
+      <div>
+        <p class="eyebrow">DIVA CONTROL ROOM</p>
+        <h1>Admin Panel</h1>
+      </div>
+      <button class="ghost" id="logout">Cixish</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stat-grid" id="statGrid">
+      <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Umumi</div></div>
+      <div class="stat-card"><div class="stat-num" id="statPending">—</div><div class="stat-label">Gozleyen</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAccepted">—</div><div class="stat-label">Qebul</div></div>
+      <div class="stat-card"><div class="stat-num" id="statRejected">—</div><div class="stat-label">Redd</div></div>
+      <div class="stat-card"><div class="stat-num" id="statCrew">—</div><div class="stat-label">Crew</div></div>
+      <div class="stat-card"><div class="stat-num" id="statMusic">—</div><div class="stat-label">Musiqi</div></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" data-tab="applications">Anketler</button>
+      <button class="admin-tab-btn" data-tab="music">Musiqiler</button>
+      <button class="admin-tab-btn" data-tab="content">Sayt Yazilari</button>
+    </div>
+
+    <!-- APPLICATIONS TAB -->
+    <div class="tab-pane active" id="tab-applications">
+      <div class="admin-card">
+        <h2>Muracietler</h2>
+        <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+          <button class="admin-tab-btn active" data-filter="all" id="filter-all">Hamisi</button>
+          <button class="admin-tab-btn" data-filter="pending" id="filter-pending">Gozleyen</button>
+          <button class="admin-tab-btn" data-filter="accepted" id="filter-accepted">Qebul</button>
+          <button class="admin-tab-btn" data-filter="rejected" id="filter-rejected">Redd</button>
+        </div>
+        <div id="applicationList"></div>
+      </div>
+    </div>
+
+    <!-- MUSIC TAB -->
+    <div class="tab-pane" id="tab-music">
+      <div class="admin-card">
+        <h2>Yeni Musiqi</h2>
+        <form id="musicForm" class="admin-form">
+          <label>Mahni adi *<input name="title" required placeholder="Senden Daha Guzel"></label>
+          <label>Ifaci<input name="artist" value="Duman" placeholder="Duman"></label>
+          <label>Audio URL *<input name="audio_url" required placeholder="https://...mp3" type="url"></label>
+          <label>Cover URL<input name="cover_url" placeholder="https://...jpg" type="url"></label>
+          <label>Sira<input name="position" type="number" value="0" min="0"></label>
+          <button class="cta">Elave et +</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h2>Playlist</h2>
+        <div id="musicList"></div>
+      </div>
+    </div>
+
+    <!-- CONTENT TAB -->
+    <div class="tab-pane" id="tab-content">
+      <div class="admin-card">
+        <h2>Saytdaki Yazilar</h2>
+        <form id="contentForm" class="admin-form">
+          <label>Ana bashliq<input name="hero_title" placeholder="Bir gece. Coxlu Duman."></label>
+          <label>Ana metn<textarea name="hero_text" rows="3" placeholder="Konserte tek getmirik..."></textarea></label>
+          <label>Qaydalar <small style="font-weight:400;opacity:.6">(her setre bir qayda)</small><textarea name="rules" rows="8" placeholder="Qrupdan xebersiz yoxa cixmaq yoxdur.&#10;Gorusu saatina gecikmek minimum..."></textarea></label>
+          <button class="cta">Yadda saxla</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="toast"></div>
+<script src="admin.js"></script>
+</body>
+</html>

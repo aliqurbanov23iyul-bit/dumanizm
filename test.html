@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2d0b1c">
+<title>Senin Duman Mahnin — Test</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="test-page">
+<div class="grain"></div>
+<header>
+  <a href="index.html" class="logo"><img src="assets/bow.png" alt="bow">DIVA CLUB</a>
+  <span class="page-label">TEST</span>
+</header>
+
+<main class="test-wrap">
+  <!-- INTRO -->
+  <div class="test-intro" id="testIntro">
+    <img src="assets/kitty-gacha.png" alt="Kitty">
+    <h1>Senin Duman<br>mahnin hansidir?</h1>
+    <p>5 eylenceli sualla ozunu tap. Netice seni surpriz edecek!</p>
+    <button class="cta" id="startTestBtn" style="display:inline-flex">Testi Basla 🎶</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="testQuiz" style="display:none">
+    <div class="test-progress-bar" id="testProgressBar"></div>
+    <div class="test-prog-label" id="testProgLabel">1 / 5</div>
+    <div id="questionWrap"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="test-result" id="testResult">
+    <div class="result-label">SƏNİN DUMAN MAHNIN...</div>
+    <div class="result-card" id="resultCard">
+      <img src="assets/kitty-peek.png" alt="Kitty" class="result-kitty-sticker" style="position:absolute;top:-16px;right:10px;width:55px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2));z-index:3">
+      <div class="result-badge" style="display:inline-block;background:var(--soft);color:var(--hot);font-size:10px;font-weight:900;letter-spacing:1.5px;padding:4px 12px;border-radius:var(--r-full);border:1.5px solid var(--ink);margin-bottom:12px">★ 100% VIBE MATCH ★</div>
+      <img class="result-cover" id="resultCover" src="assets/bow.png" alt="cover">
+      <div class="result-song-label">DUMAN</div>
+      <div class="result-song-name" id="resultSong">—</div>
+      <div class="result-song-desc" id="resultDesc">—</div>
+    </div>
+    <div class="result-actions">
+      <button class="cta" id="listenBtn">Bu mahnını dinlə 🎧</button>
+      <button class="ghost" id="shareResultBtn" style="color:var(--ink)">Nəticəni Paylaş 🎀</button>
+      <button class="ghost" id="retryBtn" style="color:var(--ink)">Yenidən yoxla ↻</button>
+      <a href="join.html" class="btn-dark" style="display:flex;justify-content:center">Diva Crew-ya qoşul 🎀</a>
+    </div>
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <a href="index.html">🏠<span>Ana</span></a>
+  <a href="music.html">📼<span>Musiqi</span></a>
+  <a href="test.html" class="active">🎶<span>Test</span></a>
+  <a href="join.html">🎀<span>Qoshul</span></a>
+</nav>
+<div id="toast"></div>
+<script src="test.js"></script>
+</body>
+</html>

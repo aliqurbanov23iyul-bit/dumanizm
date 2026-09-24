@@ -1,0 +1,33 @@
+﻿const { db, init } = require('./_db');
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') return res.status(405).end();
+  try {
+    const { name, age, favorite_song, phone } = req.body || {};
+    if (!name || !favorite_song || !phone || !age)
+      return res.status(400).json({ error: 'Butun xanalari doldur' });
+
+    const n = Number(age);
+    if (!Number.isInteger(n) || n < 14 || n > 99)
+      return res.status(400).json({ error: 'Yash yanlishdir' });
+
+    const cleanName = String(name).replace(/[<>]/g, '').trim().slice(0, 60);
+    const cleanSong = String(favorite_song).replace(/[<>]/g, '').trim().slice(0, 100);
+    const cleanPhone = String(phone).replace(/[<>]/g, '').trim().slice(0, 30);
+
+    if (!cleanName || !cleanSong || !cleanPhone)
+      return res.status(400).json({ error: 'Duzgun melumatlari daxil et' });
+
+    const sql = db();
+    await init(sql);
+
+    await sql`
+      INSERT INTO applications(name, age, favorite_song, phone, status)
+      VALUES(${cleanName}, ${n}, ${cleanSong}, ${cleanPhone}, 'pending')
+    `;
+
+    res.status(201).json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+};

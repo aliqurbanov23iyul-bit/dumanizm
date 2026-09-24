@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#200d1c">
+<title>Duman Kasetleri — Musiqi Otagi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="music-page">
+<div class="grain"></div>
+<header>
+  <a href="index.html" class="logo"><img src="assets/bow.png" alt="bow">DIVA CLUB</a>
+  <span class="page-label">MUSIQI</span>
+</header>
+
+<main class="player-wrap">
+  <div class="player-heading">
+    <p class="eyebrow">DUMAN KASETLERI · SWIPE ET</p>
+    <h1>Sesi ac.<br>Kaseti cevir.</h1>
+  </div>
+
+  <!-- CASSETTE STAGE -->
+  <div class="cassette-stage" id="stage">
+    <div class="side-cassette left" id="prevCassette" title="Əvvəlki kaset">
+      <span class="side-title" id="prevTitle">DUMAN</span>
+    </div>
+
+    <div class="cassette" id="cassette">
+      <div class="cassette-label">
+        <img id="cover" src="assets/bow.png" alt="cover">
+        <div class="label-text">
+          <strong id="trackName">Mahnı seçilir...</strong>
+          <small id="artistLabel">Duman</small>
+        </div>
+      </div>
+      <div class="tape-window">
+        <div class="reel" id="reel1">
+          <div class="reel-spoke s1"></div>
+          <div class="reel-spoke s2"></div>
+          <div class="reel-spoke s3"></div>
+          <div class="reel-center"></div>
+        </div>
+        <div class="tape-hub"></div>
+        <div class="reel" id="reel2">
+          <div class="reel-spoke s1"></div>
+          <div class="reel-spoke s2"></div>
+          <div class="reel-spoke s3"></div>
+          <div class="reel-center"></div>
+        </div>
+      </div>
+      <div class="cassette-screws">● ●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;● ●</div>
+    </div>
+
+    <div class="side-cassette right" id="nextCassette" title="Növbəti kaset">
+      <span class="side-title" id="nextTitle">DUMAN</span>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="player-controls-wrap">
+    <div class="progress-wrap">
+      <span class="time-label" id="currentTime">0:00</span>
+      <input type="range" class="seek-bar" id="seek" min="0" max="100" value="0">
+      <span class="time-label" id="duration">0:00</span>
+    </div>
+    <div class="player-btns">
+      <button id="prevBtn" aria-label="Evvelki">&#8249;</button>
+      <button id="playBtn" aria-label="Oyna">▶</button>
+      <button id="nextBtn" aria-label="Novbeti">&#8250;</button>
+    </div>
+    <p class="swipe-hint">← barmaginla saga/sola surushdur →</p>
+  </div>
+
+  <audio id="audio" preload="metadata"></audio>
+</main>
+
+<nav class="bottom-nav">
+  <a href="index.html">🏠<span>Ana</span></a>
+  <a href="music.html" class="active">📼<span>Musiqi</span></a>
+  <a href="test.html">🎶<span>Test</span></a>
+  <a href="join.html">🎀<span>Qoshul</span></a>
+</nav>
+<div id="toast"></div>
+<script src="music.js"></script>
+</body>
+</html>

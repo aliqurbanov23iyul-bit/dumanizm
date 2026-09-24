@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1a001a">
+<title>DIVA CREW Bileti</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="ticket-page">
+<div class="grain"></div>
+<header>
+  <a href="index.html" class="logo"><img src="assets/bow.png" alt="bow">DIVA CLUB</a>
+  <span class="page-label">BILET</span>
+</header>
+
+<main class="ticket-wrap" id="ticketWrap">
+  <!-- Loading state -->
+  <div id="ticketLoading" style="text-align:center;padding:60px 20px">
+    <img src="assets/kitty-wave.png" alt="Kitty" style="width:100px;margin:0 auto 16px;animation:bob 1s infinite alternate">
+    <p style="opacity:.6">Bilet yuklenilir...</p>
+  </div>
+
+  <!-- Error state -->
+  <div id="ticketError" style="display:none;text-align:center;padding:60px 20px">
+    <img src="assets/kitty-peek.png" alt="Kitty" style="width:100px;margin:0 auto 16px">
+    <h2 style="font-family:var(--font-display);font-size:28px;margin-bottom:8px">Bilet tapilmadi</h2>
+    <p style="opacity:.6;margin-bottom:20px">Bu biletin URL-i yanlishdir ya da bilet movcud deyil.</p>
+    <a href="index.html" class="ghost" style="display:inline-flex;color:white">Ana sehifeye qayit</a>
+  </div>
+
+  <!-- Ticket -->
+  <div id="ticketContent" style="display:none;width:100%;flex-direction:column;align-items:center;gap:20px">
+    <p style="opacity:.8;font-size:14px;text-align:center">Salam, <strong id="ticketGreeting">Diva Qonağı</strong>! Biletiniz hazırdır 🎀</p>
+    
+    <div class="ticket-card" id="theTicket">
+      <div class="ticket-notch notch-left"></div>
+      <div class="ticket-notch notch-right"></div>
+      
+      <div class="ticket-top">
+        <img class="ticket-kitty-decor" src="assets/kitty-wave.png" alt="Kitty">
+        <div class="ticket-event-label">★ OFFICIAL DIVA CREW PASS ★</div>
+        <div class="ticket-band">DUMAN</div>
+        <div style="font-size:13px;font-weight:800;letter-spacing:1px;opacity:.95;margin-top:6px;position:relative;z-index:1">14 NOYABR · 20:00 · BAKI</div>
+      </div>
+      <div class="ticket-middle">
+        <div class="ticket-field">
+          <label>AD</label>
+          <strong id="tName">—</strong>
+        </div>
+        <div class="ticket-field">
+          <label>TARİX</label>
+          <strong>14 NOY</strong>
+        </div>
+        <div class="ticket-field">
+          <label>SAAT</label>
+          <strong>20:00</strong>
+        </div>
+        <div class="ticket-field">
+          <label>GÜN</label>
+          <strong>CÜMƏ</strong>
+        </div>
+        <div class="ticket-crew-id">
+          <div class="crew-label">DIVA CREW ID</div>
+          <div class="crew-num" id="tCrewId">#001</div>
+        </div>
+        <div class="ticket-field full">
+          <label>FAVORİ DUMAN MAHNISI</label>
+          <strong id="tSong" style="white-space:normal;font-size:16px;color:var(--pink)">—</strong>
+        </div>
+      </div>
+      <div class="ticket-bottom">
+        <div class="ticket-song-wrap">
+          <label>HELLO KITTY × DUMAN</label>
+          <div class="ticket-song-name">DIVA CREW VIP MEMBER</div>
+        </div>
+        <div class="ticket-barcode-wrap" style="display:flex;flex-direction:column;align-items:center;gap:3px">
+          <div class="ticket-barcode" id="barcodeEl"></div>
+          <span style="font-size:9px;font-weight:900;letter-spacing:1px;opacity:.6" id="barcodeCode">DIVA-2026-001</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden canvas for generating high-res downloadable image -->
+    <canvas id="ticketCanvas" style="display:none"></canvas>
+
+    <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px">
+      <button class="cta" id="downloadTicketBtn" style="display:flex;width:100%;justify-content:center">Şəkil kimi endir (PNG) 📸</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button class="ghost" id="copyLinkBtn" style="display:flex;width:100%;justify-content:center;color:var(--ink);font-size:13px;padding:12px 10px">Linki Kopyala 📋</button>
+        <button class="ghost" id="shareBtn" style="display:flex;width:100%;justify-content:center;color:var(--ink);font-size:13px;padding:12px 10px">Paylaş 🎀</button>
+      </div>
+      <a href="music.html" class="btn-dark" style="display:flex;width:100%;justify-content:center">Duman kasetlərini dinlə 🎧</a>
+      <a href="index.html" class="ghost" style="display:flex;width:100%;justify-content:center;color:var(--ink)">Ana səhifəyə qayıt 🏠</a>
+    </div>
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <a href="index.html">🏠<span>Ana</span></a>
+  <a href="music.html">📼<span>Musiqi</span></a>
+  <a href="test.html">🎶<span>Test</span></a>
+  <a href="join.html">🎀<span>Qoshul</span></a>
+</nav>
+<div id="toast"></div>
+<script src="ticket.js"></script>
+</body>
+</html>
