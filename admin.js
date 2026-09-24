@@ -65,6 +65,7 @@ function renderApplications(apps) {
         <div class="app-info">
           <b>${esc(x.name)} &bull; ${esc(String(x.age))}</b>
           <small>&#9834; ${esc(x.favorite_song)}</small>
+          <small class="app-phone">📞 ${esc(x.phone || 'Nömrə yoxdur')}</small>
           <div class="app-badges">
             <span class="app-badge ${badgeClass}">${badgeText}</span>
             ${crewBadge}
