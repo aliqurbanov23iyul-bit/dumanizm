@@ -462,3 +462,16 @@ linear-gradient(160deg,rgb(var(--result-rgb)),#100910 78%);transition:background
 #lockscreen[hidden]{display:none!important}
 #lockscreen.unlocked{visibility:hidden}
 @media(max-width:599px){#lockscreen.unlocked{transform:translate3d(0,-110%,0)!important}}
+
+/* My Song result: the winning album art becomes the whole atmosphere */
+.test-page.result-theme-active::before{content:"";position:fixed;inset:0;z-index:-2;background-image:var(--result-cover);background-size:cover;background-position:center;filter:blur(26px) saturate(1.15);transform:scale(1.13);opacity:.68}
+.test-page.result-theme-active::after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(12,5,9,.38) 0%,rgba(var(--result-rgb),.30) 38%,rgba(10,5,8,.84) 100%);pointer-events:none}
+.test-page.result-theme-active{background:rgb(var(--result-rgb));color:#fff}
+.test-page.result-theme-active .test-wrap{position:relative;z-index:1}
+.test-page.result-theme-active .result-label{color:rgba(255,255,255,.8)}
+.test-page.result-theme-active .result-card{background:rgba(15,8,12,.30);color:#fff;border-color:rgba(255,255,255,.32);box-shadow:0 24px 70px rgba(0,0,0,.38);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+.test-page.result-theme-active .result-card::before{display:none}
+.test-page.result-theme-active .result-poster-tag,.test-page.result-theme-active .result-song-label{color:rgba(255,255,255,.68)}
+.test-page.result-theme-active .result-song-desc{color:rgba(255,255,255,.84)}
+.test-page.result-theme-active .result-cover{border:1px solid rgba(255,255,255,.28);box-shadow:0 20px 55px rgba(0,0,0,.45)}
+.test-page.result-theme-active .result-poster-footer{background:rgba(0,0,0,.30);border-top:1px solid rgba(255,255,255,.16)}
