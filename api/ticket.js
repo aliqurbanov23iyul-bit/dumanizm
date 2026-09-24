@@ -10,17 +10,17 @@ module.exports = async (req, res) => {
     const sql = db();
     await init(sql);
 
-    // Only accepted applications with crew_id, queryable by id or crew_id
+    // Every valid application receives a ticket immediately.
+    // Phone number and other private application data are never returned here.
     const rows = await sql`
       SELECT id, name, favorite_song, crew_id, status
       FROM applications
-      WHERE (id = ${id} OR crew_id = ${id}) AND status = 'accepted' AND crew_id IS NOT NULL
-      ORDER BY crew_id ASC
+      WHERE (id = ${id} OR crew_id = ${id}) AND crew_id IS NOT NULL
+      ORDER BY id ASC
       LIMIT 1
     `;
 
     if (!rows.length) return res.status(404).json({ error: 'Bilet tapilmadi' });
-
     const row = rows[0];
     res.status(200).json({
       id: row.id,
