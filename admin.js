@@ -58,7 +58,7 @@ function renderApplications(apps) {
   list.innerHTML = filtered.map(x => {
     const status = x.status || 'pending';
     const badgeClass = status === 'accepted' ? 'badge-accepted' : status === 'rejected' ? 'badge-rejected' : 'badge-pending';
-    const badgeText = status === 'accepted' ? 'Qebul' : status === 'rejected' ? 'Redd' : 'Gozleyen';
+    const badgeText = status === 'accepted' ? 'Qəbul' : status === 'rejected' ? 'Rədd' : 'Gözləyən';
     const crewBadge = x.crew_id ? `<span class="app-badge crew-badge">DIVA CREW #${String(x.crew_id).padStart(3,'0')}</span>` : '';
     return `
       <div class="app-row" id="app-${x.id}">
@@ -77,8 +77,8 @@ function renderApplications(apps) {
           ${status !== 'rejected' ? `<button class="btn-reject" onclick="rejectApp(${x.id})">&#10007; Rədd</button>` : ''}
           <button class="btn-delete" onclick="deleteApp(${x.id})">Sil</button>
           ${x.crew_id ? `
-            <button style="background:#ffe9f1;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="viewTicket(${x.id})">Biletə bax 🎀</button>
-            <button style="background:#ffffff;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="copyTicketLink(${x.id})">Link kopyala 📋</button>
+            <button style="background:#ffe9f1;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radıus:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="viewTicket(${x.id})">Biletə bax 🎀</button>
+            <button style="background:#ffffff;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radıus:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="copyTicketLink(${x.id})">Link kopyala 📋</button>
           ` : ''}
         </div>
       </div>
@@ -90,7 +90,7 @@ function renderMusic(music) {
   const list = $('#musicList');
   if (!list) return;
   if (!music.length) {
-    list.innerHTML = '<p style="opacity:.5;padding:12px 0">Playlist bosdur.</p>';
+    list.innerHTML = '<p style="opacity:.5;padding:12px 0">Playlist boşdur.</p>';
     return;
   }
   list.innerHTML = music.map(x => `
@@ -98,7 +98,7 @@ function renderMusic(music) {
       <img class="music-thumb" src="${esc(x.cover_url) || 'assets/bow.png'}" onerror="this.src='assets/bow.png'" alt="cover">
       <div class="music-info">
         <b>${esc(x.title)}</b>
-        <small>${esc(x.artist || 'Duman')} &bull; Sira: ${x.position || 0}</small>
+        <small>${esc(x.artist || 'Duman')} &bull; Sıra: ${x.position || 0}</small>
       </div>
       <div class="music-actions">
         <button onclick="deleteMusic(${x.id})">Sil</button>
@@ -131,7 +131,7 @@ async function load() {
 // Login
 $('#loginBtn').onclick = () => {
   token = $('#adminPassword').value.trim();
-  if (!token) { toast('Sifre daxil et', 'err'); return; }
+  if (!token) { toast('Şifrə daxil et', 'err'); return; }
   sessionStorage.setItem('divaAdmin', token);
   load();
 };
@@ -164,9 +164,9 @@ window.acceptApp = async id => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'acceptApplication', id })
     });
-    toast('Qebul edildi! Crew bileti yaradildi 🎀');
+    toast('Qəbul edildi! Crew bileti yaradıldi 🎀');
     load();
-  } catch { toast('Xeta bash verdi', 'err'); }
+  } catch { toast('Xəta baş verdi', 'err'); }
 };
 
 // Reject application
@@ -177,14 +177,14 @@ window.rejectApp = async id => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'rejectApplication', id })
     });
-    toast('Redd edildi.');
+    toast('Rədd edildi.');
     load();
-  } catch { toast('Xeta bash verdi', 'err'); }
+  } catch { toast('Xəta baş verdi', 'err'); }
 };
 
 // Delete application
 window.deleteApp = async id => {
-  if (!confirm('Bu anketi silmek isteyirsinizmi?')) return;
+  if (!confirm('Bu anketi silmək istəyirsinizmi?')) return;
   try {
     await api('/api/admin', {
       method: 'POST',
@@ -193,7 +193,7 @@ window.deleteApp = async id => {
     });
     toast('Silindi.');
     load();
-  } catch { toast('Xeta bash verdi', 'err'); }
+  } catch { toast('Xəta baş verdi', 'err'); }
 };
 
 // View ticket
@@ -214,7 +214,7 @@ window.copyTicketLink = async id => {
 
 // Delete music
 window.deleteMusic = async id => {
-  if (!confirm('Bu musiqini silmek isteyirsinizmi?')) return;
+  if (!confirm('Bu musiqini silmək istəyirsinizmi?')) return;
   try {
     await api('/api/admin', {
       method: 'POST',
@@ -223,7 +223,7 @@ window.deleteMusic = async id => {
     });
     toast('Musiqi silindi.');
     load();
-  } catch { toast('Xeta bash verdi', 'err'); }
+  } catch { toast('Xəta baş verdi', 'err'); }
 };
 
 // Add music form
@@ -239,9 +239,9 @@ $('#musicForm').onsubmit = async e => {
     });
     e.target.reset();
     e.target.querySelector('[name=artist]').value = 'Duman';
-    toast('Musiqi elave edildi 🎵');
+    toast('Musiqi əlavə edildi 🎵');
     load();
-  } catch (err) { toast('Xeta: ' + err.message, 'err'); }
+  } catch (err) { toast('Xəta: ' + err.message, 'err'); }
   finally { btn.disabled = false; }
 };
 
@@ -254,8 +254,8 @@ $('#contentForm').onsubmit = async e => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'content', ...Object.fromEntries(new FormData(e.target)) })
     });
-    toast('Yazilar yadda saxlanildi ✓');
-  } catch { toast('Xeta bash verdi', 'err'); }
+    toast('Yazılar yadda saxlanıldı ✓');
+  } catch { toast('Xəta baş verdi', 'err'); }
 };
 
 if (token) load();
