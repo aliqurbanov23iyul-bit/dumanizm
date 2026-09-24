@@ -389,3 +389,25 @@ input[type=range].seek-bar::-webkit-slider-thumb{appearance:none;width:16px;heig
 .result-song-name{font-size:clamp(32px,10vw,46px);line-height:.95;margin:14px 0}
 .result-poster-footer{display:flex;justify-content:space-between;gap:12px;margin:22px -22px -28px;padding:14px 20px;background:var(--ink);color:white;font-size:10px;font-weight:900;letter-spacing:1.2px}
 .share-result-main{background:linear-gradient(135deg,#fff,#ffe1ec)!important;border-color:var(--pink)!important;box-shadow:4px 5px 0 var(--pink)!important}
+
+
+/* Cassette V3 + instant playlist */
+.player-heading-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.playlist-top-btn{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:white;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:900;letter-spacing:1px;backdrop-filter:blur(10px)}
+.playlist-pill{min-width:100px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.09);color:white;border-radius:22px;padding:10px 12px;display:grid;grid-template-columns:auto 1fr;column-gap:7px;text-align:left;backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.16)}
+.playlist-pill span{grid-row:1/3;font-size:20px;align-self:center}.playlist-pill b{font-size:12px}.playlist-pill small{font-size:9px;opacity:.55}
+.cassette{box-shadow:0 18px 45px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.2),inset 0 1px rgba(255,255,255,.65)!important;transform-style:preserve-3d}
+.cassette::after{content:"DIVA MIXTAPE • SIDE A";position:absolute;left:50%;bottom:9px;transform:translateX(-50%);font-size:7px;font-weight:900;letter-spacing:1.8px;color:rgba(26,16,21,.55);white-space:nowrap}
+.cassette-label{box-shadow:inset 0 0 0 1px rgba(255,255,255,.65),0 5px 12px rgba(0,0,0,.12)}
+.tape-window{box-shadow:inset 0 4px 12px rgba(0,0,0,.35),0 2px 0 rgba(255,255,255,.55)}
+.playlist-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.58);backdrop-filter:blur(5px);z-index:180;opacity:0;pointer-events:none;transition:.3s}.playlist-backdrop.open{opacity:1;pointer-events:auto}
+.playlist-sheet{position:fixed;z-index:190;left:50%;bottom:0;width:min(520px,100%);height:min(72dvh,680px);transform:translate(-50%,105%);transition:transform .38s cubic-bezier(.22,.8,.25,1);background:linear-gradient(180deg,#24101f,#10090f);color:white;border-radius:30px 30px 0 0;border:1px solid rgba(255,255,255,.12);box-shadow:0 -25px 70px rgba(0,0,0,.45);padding:9px 16px max(22px,env(safe-area-inset-bottom));display:flex;flex-direction:column}
+.playlist-sheet.open{transform:translate(-50%,0)}.playlist-handle{width:46px;height:5px;border-radius:10px;background:rgba(255,255,255,.28);margin:2px auto 14px}
+.playlist-sheet-head{display:flex;justify-content:space-between;align-items:flex-start;padding:0 4px 14px}.playlist-sheet-head small{font-size:9px;letter-spacing:2px;color:var(--pink);font-weight:900}.playlist-sheet-head h2{font-family:var(--font-display);font-size:30px;line-height:1}.playlist-sheet-head p{font-size:12px;opacity:.55;margin-top:5px}
+#playlistClose{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:white;font-size:28px;line-height:1}
+.playlist-list{overflow-y:auto;display:grid;gap:8px;padding:3px 2px 100px;scrollbar-width:none}.playlist-list::-webkit-scrollbar{display:none}
+.playlist-track{width:100%;display:grid;grid-template-columns:30px 54px 1fr 36px;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.055);color:white;border-radius:18px;padding:9px;text-align:left;transition:.18s}
+.playlist-track:active{transform:scale(.98)}.playlist-track.active{background:color-mix(in srgb,var(--cover-glow) 40%,rgba(255,255,255,.08));border-color:color-mix(in srgb,var(--cover-glow) 80%,white 10%)}
+.playlist-track img{width:54px;height:54px;border-radius:12px;object-fit:cover;background:#33202c}.playlist-num{font-size:10px;font-weight:900;opacity:.42;text-align:center}.playlist-meta{min-width:0}.playlist-meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.playlist-meta small{display:block;font-size:11px;opacity:.5;margin-top:3px}.playlist-play{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);font-size:11px}.playlist-track.active .playlist-play{background:var(--cover-glow)}
+.playlist-empty{text-align:center;padding:60px 20px;opacity:.55;font-weight:800}.playlist-open{overflow:hidden}
+@media(max-width:360px){.playlist-pill{min-width:86px;padding:8px}.playlist-track{grid-template-columns:24px 48px 1fr 32px}.playlist-track img{width:48px;height:48px}}
