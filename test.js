@@ -53,6 +53,7 @@ async function loadQuizMusic() {
 
 function applyResultTheme(url) {
   if (!url) return;
+  document.body.style.setProperty('--result-cover', `url("${String(url).replace(/"/g, '%22')}")`);
   const img = new Image(); img.crossOrigin = 'anonymous';
   img.onload = () => {
     try {
@@ -232,6 +233,7 @@ $('#retryBtn')?.addEventListener('click', () => {
   $('#resultSong').textContent = '—';
   $('#resultDesc').textContent = '—';
   document.body.classList.remove('result-theme-active');
+  document.body.style.removeProperty('--result-cover');
 });
 
 async function createResultImage() {
