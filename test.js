@@ -200,27 +200,65 @@ $('#retryBtn')?.addEventListener('click', () => {
   $('#resultDesc').textContent = '—';
 });
 
-// Share result button
-$('#shareResultBtn')?.addEventListener('click', async () => {
-  if (!currentWinnerSong) return;
-  const shareText = `Mənim Duman mahnım çıxdı: "${currentWinnerSong.title}" 🎀 Sən də testdən keç və Diva Crew-ya qoşul!`;
-  const shareUrl = window.location.href;
+async function createResultImage() {
+  if (!currentWinnerSong) return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = 1080; canvas.height = 1920;
+  const ctx = canvas.getContext('2d');
 
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: 'Mənim Duman Mahnım 🎀',
-        text: shareText,
-        url: shareUrl
-      });
-      return;
-    } catch (e) {}
+  const grad = ctx.createLinearGradient(0,0,1080,1920);
+  grad.addColorStop(0,'#190916'); grad.addColorStop(.48,'#4a1237'); grad.addColorStop(1,'#ff4f91');
+  ctx.fillStyle=grad; ctx.fillRect(0,0,1080,1920);
+  ctx.fillStyle='rgba(255,255,255,.06)';
+  for(let i=0;i<28;i++){ctx.beginPath();ctx.arc((i*173)%1080,(i*311)%1920,4+(i%4)*2,0,Math.PI*2);ctx.fill();}
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#ffd6e5'; ctx.font='700 34px sans-serif'; ctx.fillText('DIVA CLUB • DUMAN TESTİ',540,150);
+  ctx.fillStyle='#ffffff'; ctx.font='900 74px sans-serif'; ctx.fillText('MƏNİM DUMAN MAHNIM',540,260);
+
+  const cover = new Image();
+  cover.crossOrigin='anonymous';
+  await new Promise(resolve=>{cover.onload=resolve;cover.onerror=resolve;cover.src=currentWinnerSong.cover;});
+  if(cover.complete && cover.naturalWidth){
+    ctx.save(); ctx.beginPath(); ctx.roundRect(190,360,700,700,55); ctx.clip();
+    ctx.drawImage(cover,190,360,700,700); ctx.restore();
+  } else {
+    ctx.fillStyle='#ffd6e5'; ctx.roundRect(190,360,700,700,55); ctx.fill();
   }
 
-  try {
-    await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
-    toast('Nəticə linki kopyalandı! 🎀');
-  } catch (e) {
-    toast(`Nəticən: ${currentWinnerSong.title}`);
+  ctx.fillStyle='#ff8fba'; ctx.font='800 34px sans-serif'; ctx.fillText('DUMAN',540,1150);
+  ctx.fillStyle='#ffffff'; ctx.font='900 76px sans-serif';
+  const title=currentWinnerSong.title.length>20?currentWinnerSong.title.slice(0,20)+'…':currentWinnerSong.title;
+  ctx.fillText(title,540,1250);
+
+  ctx.fillStyle='rgba(255,255,255,.82)'; ctx.font='500 34px sans-serif';
+  const words=currentWinnerSong.desc.split(' '); let line='', y=1340;
+  for(const word of words){const test=line+word+' ';if(ctx.measureText(test).width>820){ctx.fillText(line.trim(),540,y);line=word+' ';y+=52;}else line=test;}
+  if(line)ctx.fillText(line.trim(),540,y);
+
+  ctx.strokeStyle='rgba(255,255,255,.28)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(140,1640);ctx.lineTo(940,1640);ctx.stroke();
+  ctx.fillStyle='#ffffff';ctx.font='800 32px sans-serif';ctx.fillText('🎀 DIVA CREW  •  14 NOYABR  •  DUMAN',540,1720);
+  ctx.fillStyle='rgba(255,255,255,.65)';ctx.font='600 26px sans-serif';ctx.fillText('Sən də testi keç və öz Duman mahnını tap',540,1790);
+  return new Promise(resolve=>canvas.toBlob(resolve,'image/png',.95));
+}
+
+async function shareResultImage() {
+  const blob=await createResultImage();
+  if(!blob)return;
+  const file=new File([blob],'menim-duman-mahnim.png',{type:'image/png'});
+  const shareText=`Mənim Duman mahnım: "${currentWinnerSong.title}" 🎀`;
+  if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+    try{await navigator.share({title:'Mənim Duman Mahnım',text:shareText,files:[file]});return;}catch(e){if(e.name==='AbortError')return;}
   }
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='menim-duman-mahnim.png';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast('Paylaşım şəkli hazırdır 📸');
+}
+
+$('#shareResultBtn')?.addEventListener('click', shareResultImage);
+$('#downloadResultBtn')?.addEventListener('click', async()=>{
+  const blob=await createResultImage(); if(!blob)return;
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='menim-duman-mahnim.png';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast('Nəticə şəkli yadda saxlanıldı 🎀');
 });
