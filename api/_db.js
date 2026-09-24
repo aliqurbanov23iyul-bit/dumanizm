@@ -32,6 +32,13 @@ async function init(sql) {
     EXCEPTION WHEN others THEN NULL; END $$
   `;
 
+  await sql`
+    DO $ BEGIN
+      ALTER TABLE applications ADD COLUMN IF NOT EXISTS ticket_token TEXT;
+    EXCEPTION WHEN others THEN NULL; END $
+  `;
+  await sql`CREATE UNIQUE INDEX IF NOT EXISTS applications_ticket_token_idx ON applications(ticket_token) WHERE ticket_token IS NOT NULL`;
+
   // Music table
   await sql`
     CREATE TABLE IF NOT EXISTS music (
