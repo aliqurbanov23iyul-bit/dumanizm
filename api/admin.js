@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
     await init(sql);
 
     if (req.method === 'GET') {
-      const applications = await sql`SELECT id,name,age,favorite_song,phone,status,crew_id,created_at FROM applications ORDER BY created_at DESC`;
+      const applications = await sql`SELECT id,name,age,favorite_song,phone,status,crew_id,ticket_token,created_at FROM applications ORDER BY created_at DESC`;
       const music = await sql`SELECT * FROM music ORDER BY position,id`;
       const rows = await sql`SELECT key,value FROM site_content`;
       return res.json({
@@ -64,17 +64,10 @@ module.exports = async (req, res) => {
     } else if (b.action === 'acceptApplication') {
       const id = parseInt(b.id);
       if (!id) return res.status(400).json({ error: 'ID lazımdır' });
-      // Assign next crew_id if not already accepted
       const existing = await sql`SELECT status, crew_id FROM applications WHERE id=${id}`;
-      if (!existing[0]) return res.status(404).json({ error: 'Tapilmadı' });
-      if (existing[0].status === 'accepted') {
-        // Already accepted
-        await sql`UPDATE applications SET status='accepted' WHERE id=${id}`;
-      } else {
-        const nextCrew = await sql`SELECT COALESCE(MAX(crew_id),0)+1 AS next FROM applications`;
-        const newCrewId = nextCrew[0].next;
-        await sql`UPDATE applications SET status='accepted', crew_id=${newCrewId} WHERE id=${id}`;
-      }
+      if (!existing[0]) return res.status(404).json({ error: 'Tapılmadı' });
+      // Crew ID is created at application time and never changes on approval.
+      await sql`UPDATE applications SET status='accepted' WHERE id=${id}`;
 
     } else if (b.action === 'rejectApplication') {
       const id = parseInt(b.id);
