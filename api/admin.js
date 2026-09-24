@@ -37,8 +37,23 @@ module.exports = async (req, res) => {
       const artist = san(b.artist, 80) || 'Duman';
       const audio_url = san(b.audio_url, 500);
       const cover_url = san(b.cover_url, 500);
-      const position = parseInt(b.position) || 0;
       if (!title || !audio_url) return res.status(400).json({ error: 'Mahnı adı və audio URL lazımdır' });
+
+      // Köhnə 0/təkrarlanan sıraları playlist sırasına görə 1,2,3... formasında düzəlt.
+      await sql`
+        WITH ordered AS (
+          SELECT id, ROW_NUMBER() OVER (ORDER BY position ASC, id ASC) AS new_position
+          FROM music
+        )
+        UPDATE music
+        SET position = ordered.new_position
+        FROM ordered
+        WHERE music.id = ordered.id
+      `;
+
+      // Hər yeni mahnı avtomatik son sıradan +1 alır.
+      const nextRows = await sql`SELECT COALESCE(MAX(position), 0) + 1 AS next_position FROM music`;
+      const position = Number(nextRows[0].next_position);
       await sql`INSERT INTO music(title,artist,audio_url,cover_url,position) VALUES(${title},${artist},${audio_url},${cover_url},${position})`;
 
     } else if (b.action === 'deleteMusic') {
