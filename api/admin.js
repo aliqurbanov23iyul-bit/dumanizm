@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
     await init(sql);
 
     if (req.method === 'GET') {
-      const applications = await sql`SELECT id,name,age,favorite_song,status,crew_id,created_at FROM applications ORDER BY created_at DESC`;
+      const applications = await sql`SELECT id,name,age,favorite_song,phone,status,crew_id,created_at FROM applications ORDER BY created_at DESC`;
       const music = await sql`SELECT * FROM music ORDER BY position,id`;
       const rows = await sql`SELECT key,value FROM site_content`;
       return res.json({
