@@ -13,8 +13,8 @@
   <section id="loginBox" class="admin-login">
     <img src="assets/kitty-peek.png" alt="Kitty">
     <h1>Diva Admin</h1>
-    <p>Idareetme panelinize giris</p>
-    <input class="field-input" id="adminPassword" type="password" placeholder="Admin sifresi" autocomplete="current-password">
+    <p>İdarəetmə panelinizə giriş</p>
+    <input class="field-input" id="adminPassword" type="password" placeholder="Admin şifrəsi" autocomplete="current-password">
     <button class="cta" id="loginBtn" style="width:100%;margin-top:10px">Daxil ol</button>
   </section>
 
@@ -33,7 +33,7 @@
       <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Ümumi</div></div>
       <div class="stat-card"><div class="stat-num" id="statPending">—</div><div class="stat-label">Gözləyən</div></div>
       <div class="stat-card"><div class="stat-num" id="statAccepted">—</div><div class="stat-label">Qəbul</div></div>
-      <div class="stat-card"><div class="stat-num" id="statRejected">—</div><div class="stat-label">Redd</div></div>
+      <div class="stat-card"><div class="stat-num" id="statRejected">—</div><div class="stat-label">Rədd</div></div>
       <div class="stat-card"><div class="stat-num" id="statCrew">—</div><div class="stat-label">Crew</div></div>
       <div class="stat-card"><div class="stat-num" id="statMusic">—</div><div class="stat-label">Musiqi</div></div>
     </div>
@@ -48,12 +48,12 @@
     <!-- APPLICATIONS TAB -->
     <div class="tab-pane active" id="tab-applications">
       <div class="admin-card">
-        <h2>Müraciətler</h2>
+        <h2>Müraciətlər</h2>
         <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
           <button class="admin-tab-btn active" data-filter="all" id="filter-all">Hamısı</button>
           <button class="admin-tab-btn" data-filter="pending" id="filter-pending">Gözləyən</button>
           <button class="admin-tab-btn" data-filter="accepted" id="filter-accepted">Qəbul</button>
-          <button class="admin-tab-btn" data-filter="rejected" id="filter-rejected">Redd</button>
+          <button class="admin-tab-btn" data-filter="rejected" id="filter-rejected">Rədd</button>
         </div>
         <div id="applicationList"></div>
       </div>
@@ -66,8 +66,11 @@
         <form id="musicForm" class="admin-form">
           <label>Mahnı adı *<input name="title" required placeholder="Senden Daha Güzel"></label>
           <label>İfaçı<input name="artist" value="Duman" placeholder="Duman"></label>
-          <label>Audio URL *<input name="audio_url" required placeholder="https://...mp3" type="url"></label>
-          <label>Cover URL<input name="cover_url" placeholder="https://...jpg" type="url"></label>
+          <label>MP3 faylı *<input name="audio_file" id="audioFile" required type="file" accept="audio/*,.mp3"></label>
+          <label>Cover şəkli<input name="cover_file" id="coverFile" type="file" accept="image/*"></label>
+          <input name="audio_url" id="audioUrl" type="hidden">
+          <input name="cover_url" id="coverUrl" type="hidden">
+          <small style="opacity:.65;display:block;margin-top:-4px">MP3 və cover avtomatik Cloudinary-yə yüklənəcək.</small>
           <label>Sıra<input name="position" type="number" value="0" min="0"></label>
           <button class="cta">Əlavə et +</button>
         </form>
@@ -85,7 +88,7 @@
         <form id="contentForm" class="admin-form">
           <label>Ana başlıq<input name="hero_title" placeholder="Bir gecə. Çoxlu Duman."></label>
           <label>Ana mətn<textarea name="hero_text" rows="3" placeholder="Konsertə tək getmirik..."></textarea></label>
-          <label>Qaydalar <small style="font-weight:400;opacity:.6">(hər sətrə bir qayda)</small><textarea name="rules" rows="8" placeholder="Qrupdan xəbərsiz yoxa çıxmaq yoxdur.&#10;Gorusu saatına gecikmək minimum..."></textarea></label>
+          <label>Qaydalar <small style="font-weight:400;opacity:.6">(hər sətrə bir qayda)</small><textarea name="rules" rows="8" placeholder="Qrupdan xəbərsiz yoxa çıxmaq yoxdur.&#10;Görüşü saatına gecikmək minimum..."></textarea></label>
           <button class="cta">Yadda saxla</button>
         </form>
       </div>
