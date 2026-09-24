@@ -61,3 +61,19 @@
 .wa-logo{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;background:#fff;color:#ff4f91}
 .whatsapp-bar>span:nth-child(2){display:flex;flex-direction:column}.whatsapp-bar b{font-size:14px}.whatsapp-bar small{margin-top:3px;font-size:9px;color:#ffe9f2}.wa-arrow{font-size:22px}
 @media(max-width:380px){.social-row{grid-template-columns:1fr}.social-pill{padding:10px 12px}.social-copy small{display:block}}
+
+/* kawaii side scene */
+.return-page{font-family:"Trebuchet MS","Arial Rounded MT Bold",Arial,sans-serif}
+.return-card{background:linear-gradient(155deg,#3a172bdf,#180b14ed);border-color:#ff9bc455;box-shadow:0 28px 90px #000b,0 0 45px #ff4f9122}
+.return-card h1{font-family:"Arial Rounded MT Bold","Trebuchet MS",sans-serif;font-weight:900;text-shadow:0 3px 0 #0003}
+.return-card h1 em{font-family:inherit}
+.return-note{max-width:330px}
+.kitty-side{position:fixed;z-index:3;display:flex;align-items:center;gap:8px;pointer-events:none;filter:drop-shadow(0 10px 20px #0007)}
+.kitty-side img{width:82px;max-height:92px;object-fit:contain;animation:kittyBob 2.7s ease-in-out infinite alternate}
+.kitty-bubble{position:relative;max-width:175px;padding:11px 13px;border-radius:22px;background:#ffd7e8;color:#321020;border:2px solid #ff6fa8;font-family:"Arial Rounded MT Bold","Trebuchet MS",sans-serif;font-size:11px;line-height:1.25;text-align:center;box-shadow:0 8px 24px #0005;animation:bubbleGlow 2.2s ease-in-out infinite alternate}
+.kitty-bubble:after{content:"";position:absolute;width:12px;height:12px;background:#ffd7e8;border-right:2px solid #ff6fa8;border-bottom:2px solid #ff6fa8;transform:rotate(45deg);bottom:-7px;left:24px}
+.kitty-left-one{left:-14px;top:15%;animation:slideLeft 7s ease-in-out infinite}.kitty-right-one{right:-12px;top:19%;flex-direction:row-reverse;animation:slideRight 8s ease-in-out infinite}.kitty-left-two{left:-18px;bottom:12%;animation:slideLeft 9s ease-in-out infinite 1.2s}.kitty-right-two{right:-16px;bottom:10%;flex-direction:row-reverse;animation:slideRight 7.5s ease-in-out infinite .5s}
+.kitty-right-one .kitty-bubble:after,.kitty-right-two .kitty-bubble:after{left:auto;right:24px}
+@keyframes kittyBob{to{transform:translateY(-9px) rotate(3deg)}}@keyframes bubbleGlow{to{box-shadow:0 8px 30px #ff4f9166}}@keyframes slideLeft{0%,100%{transform:translateX(-48%)}35%,72%{transform:translateX(8px)}}@keyframes slideRight{0%,100%{transform:translateX(48%)}35%,72%{transform:translateX(-8px)}}
+.return-socials{position:relative}.social-pill{background:#170b13;color:#fff;border-color:#ff6fa866;box-shadow:inset 0 0 18px #ff4f9115}.social-pill:hover,.social-pill:active{background:#26101e}.social-copy small{color:#ff91ba;opacity:1}.whatsapp-bar{background:#190d16;border:2px solid #ff4f91;box-shadow:0 0 22px #ff4f9133}.whatsapp-bar .wa-logo{background:#ff4f91;color:#fff}
+@media(max-width:700px){.kitty-side{z-index:1;opacity:.82}.kitty-side img{width:55px}.kitty-bubble{display:none}.kitty-left-one{top:8%}.kitty-right-one{top:10%}.kitty-left-two{bottom:5%}.kitty-right-two{bottom:6%}.return-card{z-index:4}.return-wrap{overflow:hidden}}
