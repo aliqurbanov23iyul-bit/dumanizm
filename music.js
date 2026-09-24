@@ -29,6 +29,68 @@ const CURATED_TRACKS = [
 // Admin paneldən hüququnuz olan audio URL əlavə edildikdə həmin mahnı player-də aktiv görünür.
 
 
+
+let bgColorToken = 0;
+
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h = 0, s = 0, l = (max + min) / 2;
+  if (max !== min) {
+    const d = max - min;
+    s = l > .5 ? d / (2 - max - min) : d / (max + min);
+    if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h /= 6;
+  }
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function setMusicBackgroundFromCover(url) {
+  const page = document.body;
+  if (!url) {
+    page.style.removeProperty('--cover-bg');
+    page.style.removeProperty('--cover-glow');
+    return;
+  }
+
+  const token = ++bgColorToken;
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    if (token !== bgColorToken) return;
+    try {
+      const canvas = document.createElement('canvas');
+      const size = 48;
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      ctx.drawImage(img, 0, 0, size, size);
+      const data = ctx.getImageData(0, 0, size, size).data;
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 16) {
+        const a = data[i + 3];
+        if (a < 120) continue;
+        const rr=data[i], gg=data[i+1], bb=data[i+2];
+        const max=Math.max(rr,gg,bb), min=Math.min(rr,gg,bb);
+        if (max < 18 || min > 242) continue;
+        r += rr; g += gg; b += bb; count++;
+      }
+      if (!count) return;
+      r=Math.round(r/count); g=Math.round(g/count); b=Math.round(b/count);
+      const [h,s] = rgbToHsl(r,g,b);
+      const sat = Math.max(28, Math.min(68, s));
+      page.style.setProperty('--cover-bg', `hsl(${h} ${sat}% 13%)`);
+      page.style.setProperty('--cover-glow', `hsl(${h} ${Math.min(82,sat+14)}% 34%)`);
+    } catch (_) {
+      page.style.removeProperty('--cover-bg');
+      page.style.removeProperty('--cover-glow');
+    }
+  };
+  img.onerror = () => {};
+  img.src = url;
+}
+
 let tracks = [];
 let currentIndex = 0;
 const audio = $('#audio');
@@ -69,6 +131,7 @@ function render() {
   $('#trackName').textContent = t.title;
   $('#artistLabel').textContent = t.artist || 'Duman';
   $('#cover').src = t.cover_url || 'assets/bow.png';
+  setMusicBackgroundFromCover(t.cover_url);
   
   if (audio.src !== t.audio_url) {
     audio.src = t.audio_url || '';
