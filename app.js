@@ -26,6 +26,8 @@ window.addEventListener('load', () => {
 
   if (localStorage.getItem('divaUnlocked')) {
     lock.classList.add('unlocked');
+    lock.hidden = true;
+    lock.style.display = 'none';
     return;
   }
 
@@ -34,7 +36,12 @@ window.addEventListener('load', () => {
 
   function unlock() {
     localStorage.setItem('divaUnlocked', '1');
+    lock.style.transform = '';
     lock.classList.add('unlocked');
+    window.setTimeout(() => {
+      lock.hidden = true;
+      lock.style.display = 'none';
+    }, 850);
   }
 
   lock.addEventListener('touchstart', e => {
