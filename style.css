@@ -350,3 +350,34 @@ input[type=range].seek-bar::-webkit-slider-thumb{appearance:none;width:16px;heig
   .bottom-nav{max-width:520px;left:50%;transform:translateX(-50%);border-left:2px solid var(--soft);border-right:2px solid var(--soft)}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Dynamic music background — color is extracted from the active cover in music.js */
+.music-page{
+  --cover-bg:#1a0a1a;
+  --cover-glow:#6f234e;
+  background:
+    radial-gradient(circle at 50% 32%, color-mix(in srgb,var(--cover-glow) 55%,transparent) 0%, transparent 48%),
+    linear-gradient(160deg,var(--cover-bg) 0%,#100910 100%);
+  transition:background 700ms ease;
+  position:relative;
+}
+.music-page::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--cover-glow) 24%,transparent),transparent 58%);
+  transition:background 700ms ease;
+}
+.music-page header{
+  background:color-mix(in srgb,var(--cover-bg) 82%,transparent);
+  border-bottom-color:color-mix(in srgb,var(--cover-glow) 55%,transparent);
+  transition:background 700ms ease,border-color 700ms ease;
+}
+.music-page #playBtn{
+  background:var(--cover-glow)!important;
+  border-color:var(--cover-glow)!important;
+  box-shadow:0 0 28px color-mix(in srgb,var(--cover-glow) 60%,transparent);
+  transition:background .5s,border-color .5s,box-shadow .5s,transform .1s;
+}
