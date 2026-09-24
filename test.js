@@ -36,6 +36,38 @@ const SONGS = [
   },
 ];
 
+
+async function loadQuizMusic() {
+  try {
+    const r = await fetch('/api/public');
+    if (!r.ok) return;
+    const data = await r.json();
+    const music = data.music || [];
+    SONGS.forEach(song => {
+      const q = song.query.toLowerCase().replace(/ı/g,'i').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ç/g,'c');
+      const match = music.find(m => (m.title || '').toLowerCase().replace(/ı/g,'i').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ğ/g,'g').replace(/ç/g,'c').includes(q));
+      if (match?.cover_url) song.cover = match.cover_url;
+    });
+  } catch (_) {}
+}
+
+function applyResultTheme(url) {
+  if (!url) return;
+  const img = new Image(); img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    try {
+      const c=document.createElement('canvas'); c.width=c.height=48;
+      const x=c.getContext('2d',{willReadFrequently:true}); x.drawImage(img,0,0,48,48);
+      const d=x.getImageData(0,0,48,48).data; let r=0,g=0,b=0,n=0;
+      for(let i=0;i<d.length;i+=16){if(d[i+3]<120)continue; const mx=Math.max(d[i],d[i+1],d[i+2]),mn=Math.min(d[i],d[i+1],d[i+2]); if(mx<18||mn>242)continue;r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+      if(!n)return; r=Math.round(r/n);g=Math.round(g/n);b=Math.round(b/n);
+      document.body.style.setProperty('--result-rgb',r+','+g+','+b);
+      document.body.classList.add('result-theme-active');
+    } catch(_){}
+  };
+  img.src=url;
+}
+
 const QUESTIONS = [
   {
     q: 'Konsert gecəsi nə geyinərsən?',
@@ -171,6 +203,7 @@ function showResult() {
   resultEl.classList.add('show');
 
   $('#resultCover').src = song.cover;
+  applyResultTheme(song.cover);
   $('#resultSong').textContent = song.title;
   $('#resultDesc').textContent = song.desc;
 
@@ -198,6 +231,7 @@ $('#retryBtn')?.addEventListener('click', () => {
   $('#testQuiz').style.display = 'none';
   $('#resultSong').textContent = '—';
   $('#resultDesc').textContent = '—';
+  document.body.classList.remove('result-theme-active');
 });
 
 async function createResultImage() {
@@ -262,3 +296,4 @@ $('#downloadResultBtn')?.addEventListener('click', async()=>{
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
   toast('Nəticə şəkli yadda saxlanıldı 🎀');
 });
+loadQuizMusic();
