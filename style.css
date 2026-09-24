@@ -454,3 +454,6 @@ linear-gradient(160deg,rgb(var(--result-rgb)),#100910 78%);transition:background
 .creator-links a:active{transform:translate(3px,3px);box-shadow:1px 2px 0 var(--pink)}
 .creator-links a>span{width:40px;height:40px;border-radius:13px;background:var(--pink);display:grid;place-items:center;font-size:22px;font-weight:900}.creator-links small{display:block;font-size:8px;letter-spacing:1.5px;opacity:.55}.creator-links strong{display:block;font-size:15px;margin-top:2px}.creator-links i{font-style:normal;font-size:18px}
 .creator-credit{position:relative;z-index:2;border-top:1px solid #eadde2;padding-top:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:8px;font-weight:900;letter-spacing:1.5px;color:#8b747e}.creator-credit b{font-family:var(--font-display);font-size:18px;letter-spacing:0;color:var(--pink)}
+
+.creator-social-icon svg{width:23px;height:23px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.creator-links a:nth-child(2) .creator-social-icon svg{fill:currentColor;stroke:none}
