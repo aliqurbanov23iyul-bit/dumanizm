@@ -129,6 +129,7 @@ function render() {
   if (!t) return;
 
   $('#trackName').textContent = t.title;
+  document.querySelectorAll('.playlist-track').forEach((el,i)=>el.classList.toggle('active',i===currentIndex));
   $('#artistLabel').textContent = t.artist || 'Duman';
   $('#cover').src = t.cover_url || 'assets/bow.png';
   setMusicBackgroundFromCover(t.cover_url);
@@ -266,6 +267,45 @@ stage.addEventListener('mouseup', e => {
 
 stage.addEventListener('mouseleave', () => { isDragging = false; });
 
+// ── PLAYLIST DRAWER ───────────────────────────
+const playlistSheet = $('#playlistSheet');
+const playlistBackdrop = $('#playlistBackdrop');
+
+function renderPlaylist() {
+  const list = $('#playlistList');
+  const count = $('#trackCount');
+  if (count) count.textContent = tracks.length + ' mahnı';
+  if (!list) return;
+  if (!tracks.length) {
+    list.innerHTML = '<div class="playlist-empty">Hələ musiqi əlavə edilməyib 🎀</div>';
+    return;
+  }
+  list.innerHTML = tracks.map((t,i) => `
+    <button class="playlist-track ${i===currentIndex?'active':''}" data-index="${i}" type="button">
+      <span class="playlist-num">${String(i+1).padStart(2,'0')}</span>
+      <img src="${t.cover_url || 'assets/bow.png'}" alt="" onerror="this.src='assets/bow.png'">
+      <span class="playlist-meta"><b>${escapeHtml(t.title)}</b><small>${escapeHtml(t.artist || 'Duman')}</small></span>
+      <span class="playlist-play">${i===currentIndex && !audio.paused ? '❚❚' : '▶'}</span>
+    </button>`
+  ).join('');
+  list.querySelectorAll('.playlist-track').forEach(btn => btn.onclick = () => selectTrack(Number(btn.dataset.index)));
+}
+
+function escapeHtml(v='') {
+  return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function openPlaylist(){ renderPlaylist(); playlistSheet?.classList.add('open'); playlistBackdrop?.classList.add('open'); playlistSheet?.setAttribute('aria-hidden','false'); document.body.classList.add('playlist-open'); }
+function closePlaylist(){ playlistSheet?.classList.remove('open'); playlistBackdrop?.classList.remove('open'); playlistSheet?.setAttribute('aria-hidden','true'); document.body.classList.remove('playlist-open'); }
+function selectTrack(index){
+  if(index<0 || index>=tracks.length)return;
+  currentIndex=index; render(); renderPlaylist(); closePlaylist();
+  audio.play().then(()=>{cassette.classList.add('playing');$('#playBtn').textContent='⏸';renderPlaylist();}).catch(()=>{});
+}
+$('#playlistBtn')?.addEventListener('click',openPlaylist);
+$('#playlistBtnHero')?.addEventListener('click',openPlaylist);
+$('#playlistClose')?.addEventListener('click',closePlaylist);
+playlistBackdrop?.addEventListener('click',closePlaylist);
+
 // ── OPEN SONG BY TITLE (from test page or ticket) ──
 function openSongByTitle(title) {
   if (!title) return;
@@ -295,6 +335,7 @@ async function initPlaylist() {
   }
 
   render();
+  renderPlaylist();
 
   // Check URL param ?song=...
   const params = new URLSearchParams(location.search);
