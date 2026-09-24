@@ -8,7 +8,7 @@ const SONGS = [
     title: 'Senden Daha Güzel',
     desc: 'Sən romantik, dərinlikli və həssassan. Sevdinmi tam sevərsən, konsertdə hər kəslə bir ağızdan oxuyarsan!',
     cover: 'assets/bow.png',
-    query: 'Senden Daha Guzel'
+    query: 'Senden Daha Güzel'
   },
   {
     title: 'Aman Aman',
