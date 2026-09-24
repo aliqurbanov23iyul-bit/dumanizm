@@ -12,7 +12,7 @@ function san(s, max = 200) {
 }
 
 module.exports = async (req, res) => {
-  if (!auth(req)) return res.status(401).json({ error: 'Giris yanlishdir' });
+  if (!auth(req)) return res.status(401).json({ error: 'Giriş yanlışdır' });
   try {
     const sql = db();
     await init(sql);
@@ -38,20 +38,20 @@ module.exports = async (req, res) => {
       const audio_url = san(b.audio_url, 500);
       const cover_url = san(b.cover_url, 500);
       const position = parseInt(b.position) || 0;
-      if (!title || !audio_url) return res.status(400).json({ error: 'Mahni adi ve audio URL lazimdir' });
+      if (!title || !audio_url) return res.status(400).json({ error: 'Mahnı adı və audio URL lazımdır' });
       await sql`INSERT INTO music(title,artist,audio_url,cover_url,position) VALUES(${title},${artist},${audio_url},${cover_url},${position})`;
 
     } else if (b.action === 'deleteMusic') {
       const id = parseInt(b.id);
-      if (!id) return res.status(400).json({ error: 'ID lazimdir' });
+      if (!id) return res.status(400).json({ error: 'ID lazımdır' });
       await sql`DELETE FROM music WHERE id=${id}`;
 
     } else if (b.action === 'acceptApplication') {
       const id = parseInt(b.id);
-      if (!id) return res.status(400).json({ error: 'ID lazimdir' });
+      if (!id) return res.status(400).json({ error: 'ID lazımdır' });
       // Assign next crew_id if not already accepted
       const existing = await sql`SELECT status, crew_id FROM applications WHERE id=${id}`;
-      if (!existing[0]) return res.status(404).json({ error: 'Tapilmadi' });
+      if (!existing[0]) return res.status(404).json({ error: 'Tapilmadı' });
       if (existing[0].status === 'accepted') {
         // Already accepted
         await sql`UPDATE applications SET status='accepted' WHERE id=${id}`;
@@ -63,12 +63,12 @@ module.exports = async (req, res) => {
 
     } else if (b.action === 'rejectApplication') {
       const id = parseInt(b.id);
-      if (!id) return res.status(400).json({ error: 'ID lazimdir' });
+      if (!id) return res.status(400).json({ error: 'ID lazımdır' });
       await sql`UPDATE applications SET status='rejected' WHERE id=${id}`;
 
     } else if (b.action === 'deleteApplication') {
       const id = parseInt(b.id);
-      if (!id) return res.status(400).json({ error: 'ID lazimdir' });
+      if (!id) return res.status(400).json({ error: 'ID lazımdır' });
       await sql`DELETE FROM applications WHERE id=${id}`;
 
     } else if (b.action === 'content') {
@@ -80,7 +80,7 @@ module.exports = async (req, res) => {
       }
 
     } else {
-      return res.status(400).json({ error: 'Namelum emeliyyat' });
+      return res.status(400).json({ error: 'Naməlum əməliyyat' });
     }
 
     res.json({ ok: true });
