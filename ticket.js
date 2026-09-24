@@ -50,21 +50,9 @@ function populateTicket(data) {
 
 async function loadTicket() {
   const params = new URLSearchParams(location.search);
-  const id = params.get('id') || params.get('crew') || params.get('crew_id');
-  const nameParam = params.get('name');
-  const songParam = params.get('song');
+  const token = params.get('t') || params.get('token');
 
-  if (nameParam && songParam) {
-    populateTicket({
-      name: decodeURIComponent(nameParam),
-      favorite_song: decodeURIComponent(songParam),
-      crew_id: parseInt(id) || 1,
-      status: 'accepted'
-    });
-    return;
-  }
-
-  if (!id) {
+  if (!token) {
     // Check local storage for recent application
     const saved = localStorage.getItem('diva_user_ticket');
     if (saved) {
@@ -74,37 +62,20 @@ async function loadTicket() {
         return;
       } catch (e) {}
     }
-    // Default demo ticket so page is never broken
-    populateTicket({
-      name: 'Diva Qonağı',
-      favorite_song: 'Senden Daha Güzel',
-      crew_id: 1,
-      status: 'accepted'
-    });
+    $('#ticketLoading').style.display = 'none';
+    $('#ticketError').style.display = 'block';
     return;
   }
 
   try {
-    const r = await fetch(`/api/ticket?id=${encodeURIComponent(id)}`);
+    const r = await fetch(`/api/ticket?t=${encodeURIComponent(token)}`, { cache: 'no-store' });
     if (!r.ok) throw new Error('Not found');
     const data = await r.json();
     populateTicket(data);
   } catch (err) {
-    // Check fallback
-    const saved = localStorage.getItem('diva_user_ticket');
-    if (saved) {
-      try {
-        populateTicket(JSON.parse(saved));
-        return;
-      } catch (e) {}
-    }
-    // Fallback preview
-    populateTicket({
-      name: 'Diva Fan',
-      favorite_song: 'Aman Aman',
-      crew_id: parseInt(id) || 1,
-      status: 'accepted'
-    });
+    $('#ticketLoading').style.display = 'none';
+    $('#ticketContent').style.display = 'none';
+    $('#ticketError').style.display = 'block';
   }
 }
 
