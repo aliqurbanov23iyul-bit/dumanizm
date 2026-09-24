@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   try {
     const rawId = req.query?.id || req.query?.crew_id || req.query?.crew;
     const id = parseInt(rawId);
-    if (!id || isNaN(id)) return res.status(400).json({ error: 'ID lazimdir' });
+    if (!id || isNaN(id)) return res.status(400).json({ error: 'ID lazımdır' });
 
     const sql = db();
     await init(sql);
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
       LIMIT 1
     `;
 
-    if (!rows.length) return res.status(404).json({ error: 'Bilet tapilmadi' });
+    if (!rows.length) return res.status(404).json({ error: 'Bilet tapilmadı' });
     const row = rows[0];
     res.status(200).json({
       id: row.id,
