@@ -457,3 +457,8 @@ linear-gradient(160deg,rgb(var(--result-rgb)),#100910 78%);transition:background
 
 .creator-social-icon svg{width:23px;height:23px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .creator-links a:nth-child(2) .creator-social-icon svg{fill:currentColor;stroke:none}
+
+/* iOS lockscreen cleanup: never leave the intro overlay over page content */
+#lockscreen[hidden]{display:none!important}
+#lockscreen.unlocked{visibility:hidden}
+@media(max-width:599px){#lockscreen.unlocked{transform:translate3d(0,-110%,0)!important}}
