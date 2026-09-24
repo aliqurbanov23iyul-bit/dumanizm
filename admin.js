@@ -77,8 +77,8 @@ function renderApplications(apps) {
           ${status !== 'rejected' ? `<button class="btn-reject" onclick="rejectApp(${x.id})">&#10007; Rədd</button>` : ''}
           <button class="btn-delete" onclick="deleteApp(${x.id})">Sil</button>
           ${x.crew_id ? `
-            <button style="background:#ffe9f1;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="viewTicket(${x.id})">Biletə bax 🎀</button>
-            <button style="background:#ffffff;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="copyTicketLink(${x.id})">Link kopyala 📋</button>
+            <button style="background:#ffe9f1;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="viewTicket('${esc(x.ticket_token || '')}')">Biletə bax 🎀</button>
+            <button style="background:#ffffff;color:#1a1015;font-size:11px;border:2px solid var(--ink);border-radius:14px;padding:6px 8px;font-weight:800;cursor:pointer" onclick="copyTicketLink('${esc(x.ticket_token || '')}')">Link kopyala 📋</button>
           ` : ''}
         </div>
       </div>
@@ -197,13 +197,15 @@ window.deleteApp = async id => {
 };
 
 // View ticket
-window.viewTicket = id => {
-  window.open(`/ticket.html?id=${id}`, '_blank');
+window.viewTicket = ticketToken => {
+  if (!ticketToken) { toast('Bu köhnə bilet üçün yeni şəxsi link yoxdur', 'err'); return; }
+  window.open(`/ticket.html?t=${encodeURIComponent(ticketToken)}`, '_blank');
 };
 
 // Copy ticket link
-window.copyTicketLink = async id => {
-  const url = `${window.location.origin}/ticket.html?id=${id}`;
+window.copyTicketLink = async ticketToken => {
+  if (!ticketToken) { toast('Bu köhnə bilet üçün yeni şəxsi link yoxdur', 'err'); return; }
+  const url = `${window.location.origin}/ticket.html?t=${encodeURIComponent(ticketToken)}`;
   try {
     await navigator.clipboard.writeText(url);
     toast('Bilet linki kopyalandı! 📋');
