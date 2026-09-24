@@ -21,7 +21,7 @@ $('#submitBtn')?.addEventListener('click',async()=>{
   const r=await fetch('/api/applications',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(formData)});
   const data=await r.json().catch(()=>({}));
   if(!r.ok)throw new Error(data.error||'Xəta başla verdi');
-  const ticket={id:data.id,name:data.name||formData.name,favorite_song:data.favorite_song||formData.favorite_song,crew_id:data.crew_id,status:data.status||'pending'};
+  const ticket={id:data.id,name:data.name||formData.name,favorite_song:data.favorite_song||formData.favorite_song,crew_id:data.crew_id,status:data.status||'pending',ticket_token:data.ticket_token,ticket_url:data.ticket_url};
   localStorage.setItem('diva_user_ticket',JSON.stringify(ticket));
   $('#openTicketBtn').href=data.ticket_url||`ticket.html?id=${data.id}`;
   $('#stepFormWrap').style.display='none';$('#joinSuccess').classList.add('show');
