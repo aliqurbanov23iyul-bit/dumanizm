@@ -3,45 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#180913">
-<title>Diva Access — Dumanizm</title>
+<meta name="theme-color" content="#200d1c">
+<title>Duman Kasetləri — Musiqi Otagi</title>
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="geri-alin.css">
 </head>
-<body class="return-page">
-  <div class="return-grain"></div><div class="motion-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
-<div class="kitty-side kitty-left-one"><img src="assets/kitty-peek.png" alt=""><div class="kitty-bubble">Əlini qrupa geri alın da<br>sayta girsin artıq :)</div></div>
-<div class="kitty-side kitty-right-one"><img src="assets/kitty-wave.png" alt=""><div class="kitty-bubble">Sayt hazırdır 🎀</div></div>
-<div class="kitty-side kitty-left-two"><img src="assets/kitty-sitting.png" alt=""><div class="kitty-bubble">Əli qrupda olanda<br>hamı daxil ola biləcək!</div></div>
-<div class="kitty-side kitty-right-two"><img src="assets/kitty-running.png" alt=""><div class="kitty-bubble">Əli qayıtsın,<br>davam edək ♫</div></div><div class="music-lines" aria-hidden="true"><span>♪</span><span>♫</span><span>★</span><span>♪</span><span>✦</span><span>♫</span></div>
-  <div class="return-stars" aria-hidden="true"><i>✦</i><i>★</i><i>🎀</i><i>✦</i><i>♪</i></div>
-  <main class="return-wrap">
-    <div class="return-code">403</div>
-    <div class="return-card">
-      <div class="return-tag">DIVA CLUB • SPECIAL MODE</div>
-      <img src="assets/kitty-peek.png" class="return-kitty" alt="Hello Kitty">
-      <h1>Sayt hazırdır.<br><em>Əlini qrupa geri alın.</em></h1>
-      <p class="return-note">Dumanizm hazır vəziyyətdədir. Giriş üçün sadəcə bir şərt var: Əli yenidən qrupda olsun. :)</p>
-      <div class="return-socials">
-  <p class="social-label">ƏLİ İLƏ ƏLAQƏ</p>
-  <div class="social-row">
-    <a class="social-pill instagram" href="https://www.instagram.com/ok4nnerr/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-      <span class="social-logo"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="fill-dot" cx="17.4" cy="6.7" r="1.1"/></svg></span>
-      <span class="social-copy"><b>Instagram</b><small>@ok4nnerr</small></span>
-    </a>
-    <a class="social-pill tiktok" href="https://www.tiktok.com/@ok4nnerr" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-      <span class="social-logo"><svg viewBox="0 0 24 24"><path d="M14.5 3v11.2a4.6 4.6 0 1 1-4-4.56v2.85a1.8 1.8 0 1 0 1.2 1.71V3h2.8c.35 2.25 1.65 3.7 4 4.05v2.8c-1.55-.08-2.86-.57-4-1.45"/></svg></span>
-      <span class="social-copy"><b>TikTok</b><small>@ok4nnerr</small></span>
-    </a>
-  </div>
-  <a class="whatsapp-bar" href="https://wa.me/994552731235?text=%C6%8Fli%2C%20ben%20bir%20orospu%20evlad%C4%B1y%C4%B1m" target="_blank" rel="noopener noreferrer">
-    <span class="wa-logo"><svg viewBox="0 0 24 24"><path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.4-4.9a8.4 8.4 0 1 1 16.1-3.9Z"/><path d="M8.1 7.7c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.8 1.9c.1.3.1.5-.1.7l-.6.8c-.2.2-.2.4 0 .7.6 1 1.5 1.8 2.5 2.4.3.2.5.2.7-.1l.9-1.1c.2-.3.5-.3.8-.2l1.9.9c.3.2.5.3.5.5 0 .3-.1 1.4-.8 2-.6.6-1.5.9-2.4.7-1.3-.3-3-1-4.8-2.6-1.5-1.4-2.5-3-2.8-4.3-.3-1.2.1-1.8.5-2.2Z"/></svg></span>
-    <span><b>Əliyə yaz</b><small>WhatsApp-da mesaj göndər</small></span>
-    <span class="wa-arrow">→</span>
-  </a>
-</div>
-<div class="return-footer">DESIGNED &amp; CODED BY <b>ALI</b> • DUMANIZM</div>
+<body class="music-page">
+<div class="grain"></div>
+<header>
+  <a href="index.html" class="logo"><img src="assets/bow.png" alt="bow">DIVA CLUB</a>
+  <button class="playlist-top-btn" id="playlistBtn" type="button">☰ PLAYLIST</button>
+</header>
+
+<main class="player-wrap">
+  <div class="player-heading">
+    <div class="player-heading-row">
+      <div>
+        <p class="eyebrow">DUMAN KASETLƏRİ · SWIPE ET</p>
+        <h1>Səsi aç.<br>Kaseti çevir.</h1>
+      </div>
+      <button class="playlist-pill" id="playlistBtnHero" type="button"><span>☰</span><b>Playlist</b><small id="trackCount">0 mahnı</small></button>
     </div>
-  </main>
+  </div>
+
+  <!-- CASSETTE STAGE -->
+  <div class="cassette-stage" id="stage">
+    <div class="side-cassette left" id="prevCassette" title="Əvvəlki kaset">
+      <span class="side-title" id="prevTitle">DUMAN</span>
+    </div>
+
+    <div class="cassette" id="cassette">
+      <div class="cassette-label">
+        <img id="cover" src="assets/bow.png" alt="cover">
+        <div class="label-text">
+          <strong id="trackName">Mahnı seçilir...</strong>
+          <small id="artistLabel">Duman</small>
+        </div>
+      </div>
+      <div class="tape-window">
+        <div class="reel" id="reel1">
+          <div class="reel-spoke s1"></div>
+          <div class="reel-spoke s2"></div>
+          <div class="reel-spoke s3"></div>
+          <div class="reel-center"></div>
+        </div>
+        <div class="tape-hub"></div>
+        <div class="reel" id="reel2">
+          <div class="reel-spoke s1"></div>
+          <div class="reel-spoke s2"></div>
+          <div class="reel-spoke s3"></div>
+          <div class="reel-center"></div>
+        </div>
+      </div>
+      <div class="cassette-screws">● ●&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;● ●</div>
+    </div>
+
+    <div class="side-cassette right" id="nextCassette" title="Növbəti kaset">
+      <span class="side-title" id="nextTitle">DUMAN</span>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="player-controls-wrap">
+    <div class="progress-wrap">
+      <span class="time-label" id="currentTime">0:00</span>
+      <input type="range" class="seek-bar" id="seek" min="0" max="100" value="0">
+      <span class="time-label" id="duration">0:00</span>
+    </div>
+    <div class="player-btns">
+      <button id="prevBtn" aria-label="Evvelki">&#8249;</button>
+      <button id="playBtn" aria-label="Oyna">▶</button>
+      <button id="nextBtn" aria-label="Növbəti">&#8250;</button>
+    </div>
+    <p class="swipe-hint">← barmağınla sağa/sola sürüşdür →</p>
+  </div>
+
+  <audio id="audio" preload="metadata"></audio>
+</main>
+
+<div class="playlist-backdrop" id="playlistBackdrop"></div>
+<section class="playlist-sheet" id="playlistSheet" aria-hidden="true">
+  <div class="playlist-handle"></div>
+  <div class="playlist-sheet-head">
+    <div><small>DIVA CLUB</small><h2>Mahnı siyahısı</h2><p>İstədiyini seç, birbaşa dinlə 🎧</p></div>
+    <button id="playlistClose" type="button" aria-label="Bağla">×</button>
+  </div>
+  <div class="playlist-list" id="playlistList"></div>
+</section>
+
+<nav class="bottom-nav">
+  <a href="index.html">🏠<span>Ana</span></a>
+  <a href="music.html" class="active">📼<span>Musiqi</span></a>
+  <a href="test.html">🎶<span>Test</span></a>
+  <a href="join.html">🎀<span>Qoşul</span></a>
+</nav>
+<div id="toast"></div>
+<script src="music.js"></script>
 </body>
 </html>
