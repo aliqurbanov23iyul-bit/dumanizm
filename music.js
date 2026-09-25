@@ -93,6 +93,7 @@ function setMusicBackgroundFromCover(url) {
 
 let tracks = [];
 let currentIndex = 0;
+let repeatMode = 'sequence'; // sequence | one
 const audio = $('#audio');
 const cassette = $('#cassette');
 const stage = $('#stage');
@@ -209,7 +210,32 @@ audio.onpause = () => {
   $('#playBtn').textContent = '▶';
 };
 
-audio.onended = () => change(1);
+audio.onended = () => {
+  if (repeatMode === 'one') {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  } else {
+    change(1);
+  }
+};
+
+const repeatBtn = $('#repeatBtn');
+const repeatStatus = $('#repeatStatus');
+function updateRepeatUI() {
+  if (!repeatBtn) return;
+  const repeatOne = repeatMode === 'one';
+  repeatBtn.textContent = repeatOne ? '↻¹' : '↻';
+  repeatBtn.classList.toggle('active', repeatOne);
+  repeatBtn.setAttribute('aria-pressed', String(repeatOne));
+  repeatBtn.title = repeatOne ? 'Bu mahnını təkrarla' : 'Mahnılar ardıcıllıqla keçsin';
+  if (repeatStatus) repeatStatus.textContent = repeatOne ? 'Bu mahnı təkrarlanacaq' : 'Ardıcıl keçid aktivdir';
+}
+repeatBtn?.addEventListener('click', () => {
+  repeatMode = repeatMode === 'sequence' ? 'one' : 'sequence';
+  updateRepeatUI();
+  toast(repeatMode === 'one' ? 'Mahnı təkrarı aktivdir ↻' : 'Ardıcıl keçid aktivdir →');
+});
+updateRepeatUI();
 
 // ── PROGRESS ────────────────────────────────
 audio.ontimeupdate = () => {
